@@ -1,0 +1,950 @@
+swagger: '2.0'
+info:
+    version: 1.0.0
+    title: cmdb
+    description: cmdb APIs
+host: cmdb.guokr.com
+basePath: 
+    /v1
+schemes:
+    - http
+consumes:
+    - application/json
+produces:
+    - application/json
+  
+definitions:
+    Ec2:
+        type: array
+        items:
+            properties:
+                instance_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                private_ip:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                public_ip:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                run_state:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                keyname:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                cpu_num:
+                  type: integer
+                memory_num:
+                  type: integer
+                vpc_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64
+                
+              
+    Elb:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                loadbalancer_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                loadbalancer_port:
+                  type: integer   
+                instance_port:
+                  type: integer
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                dns_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 128                  
+                vpc_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64   
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64                  
+          
+    Rds:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                db_identifier:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                status:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                engine:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                resource_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                storage_type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                cpu_num:
+                  type: integer
+                memory_num:
+                  type: integer
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64
+                  
+          
+    ElastiCache:
+        type: array
+        items:
+            properties:
+                id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                cachecluster_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                status:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                engine:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                memory_num:
+                  type: integer
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64
+                  
+                  
+    Volume:
+        type: array
+        items:
+            properties:
+                volume_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                size:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                state:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                iops:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                volume_type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                     
+                ec2_instance_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64      
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64                  
+    
+    Vpc:
+        type: array
+        items:
+            properties:
+                vpc_id:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                status:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                cidrblock:
+                  type: string   
+                  minLength: 1
+                  maxLength: 64     
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64
+                  
+    S3:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer                 
+                aws_creation_date:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                size:
+                  type: string
+                  minLength: 1
+                  maxLength: 64 
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64
+                  
+    Iam:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                user_id: 
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                user_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                password_lastused:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                create_date:
+                  type: string
+                  minLength: 1
+                  maxLength: 64       
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_status:
+                  type: boolean
+                  minLength: 1
+                  maxLength: 64                  
+          
+    CloudWatch:
+        type: array
+        items:
+            properties:
+                Timestamp:
+                  type: string
+                data:
+                  type: string
+    Error:
+        properties:
+            error_code:
+                type: string
+            message:
+                type: string
+            text:
+                type: string
+    Success:
+        properties:
+            ok:
+                type: boolean
+            
+parameters:
+    ec2_instance_id:
+        name: instance_id
+        in: path
+        required: true
+        description: ec2的实例id
+        type: string
+    
+        
+    vpc_instance_id:
+        name: vpc_id
+        in: path
+        description: vpc实例的id
+        type: string
+        required: true
+        
+    rds_instance_identifier:
+        name: rds_instance_identifier
+        in: path
+        description: rds的是实例名字
+        type: string
+        required: true
+        
+    ec_instance_id:
+        name: cachecluster_id
+        in: path
+        description: elasticache的名字
+        type: string
+        required: true
+        
+    elb_instance_name:
+        name: loadbalancer_name
+        in: path
+        description: elb的名字
+        type: string
+        required: true
+    volume_instance_id:
+        name: volume_id
+        in: path
+        description: volume的id
+        type: string
+        required: true
+        
+    Iam_user_id:
+        name: user_id
+        in: path
+        description: 用户的id
+        type: string
+        required: true
+    s3_name:
+        name: s3_name
+        in: path
+        description: s3实例名字
+        type: string
+        required: true
+    
+    start_time:
+        name: start_time
+        in: query
+        description: 获得监控数据的起始时间
+        type: string
+        required: true
+    end_time:
+        name: end_time
+        in: query
+        description: 获得监控数据的结束时间
+        type: string
+        required: true
+    period:
+        name: period
+        in: query
+        description: 每隔多长时间获得一次数据
+        type: integer
+        required: true
+    polymerization :
+        name: polymerization
+        in: query
+        description: 数据的聚合函数
+        type: string
+        required: true
+        enum:
+            - SampleCount
+            - Average
+            - Sum
+            - Minimum
+            - Maximum
+    ec2_monitor_item:
+        name: ec2_monitor_item
+        in: query
+        description: 监控项
+        type: string
+        required: true
+        enum:
+            - CPUUtilization
+            - DiskReadBytes
+            - DiskReadOps
+            - DiskWriteBytes
+            - DiskWriteOps
+            - NetworkIn
+            - NetworkOut    
+    elb_monitor_item:
+        name: elb_monitor_item
+        in: query
+        description: 监控项
+        type: string
+        required: true
+        enum:
+            - UnHealthyHostCount
+            - RequestCount
+            - Latency
+            - HealthyHostCount
+            - BackendConnectionErrors
+            - HTTPCode_Backend_5XX
+            - HTTPCode_ELB_5XX
+            - HTTPCode_Backend_4XX
+            
+    rds_monitor_item:
+        name: rds_monitor_item
+        in: query
+        description: 监控项
+        type: string
+        required: true
+        enum:
+            - FreeableMemory
+            - FreeStorageSpace
+            - ReadIOPS
+            - ReadLatency
+            - NetworkReceiveThroughput
+            - NetworkTransmitThroughput
+            - SwapUsage
+            - WriteIOPS
+            - WriteLatency
+            - DatabaseConnections
+            
+    elasticache_monitor_item:
+        name: elasticache_monitor_item
+        in: query
+        description: 监控项
+        type: string
+        required: true
+        enum:
+            - BytesUsedForCache
+            - CacheHits
+            - CacheMisses
+            - CPUUtilization
+            - CurrConnections
+            - CurrItems
+            - FreeableMemory
+            - Reclaimed
+            - NetworkBytesIn
+ 
+paths:
+    /awsserver/ec2:
+        get:
+          summary: 获取ec2的资源
+          description: 获取ec2的资源
+          tags: [aws_server_source]
+          operationId: awsserver_ec2
+          responses:
+            200:
+              description: 全部ec2的资源列表
+              schema:
+                $ref: '#/definitions/Ec2'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error' 
+                
+    /awsserver/ec2/{instance_id}:
+        put:
+            summary: 更新某个ec2资源
+            description: 更新某个ec2资源
+            tags: [aws_server_source]
+            operationId: awsserver_ec2_put
+            parameters:
+                - name: run_state
+                  in: query
+                  required: true
+                  type: string
+                - $ref: '#/parameters/ec2_instance_id' 
+            responses:
+                201:
+                  description: 返回更新后的资源信息
+                  schema:
+                    $ref: '#/definitions/Ec2'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+        
+        delete:
+          summary: 删除某个ec2资源
+          description: 删除某个ec2资源
+          tags: [aws_server_source]
+          operationId: awsserver_ec2_delete
+          parameters: 
+            - $ref: '#/parameters/ec2_instance_id'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'  
+               
+
+    /awsserver/vpc:
+        get:
+          summary: 获取vpc的资源
+          description: 获取vpc的资源
+          tags: [aws_server_source]
+          operationId: awsserver_vpc
+          responses:
+            200:
+              description: 全部vpc的资源
+              schema:
+                $ref: '#/definitions/Vpc'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'  
+         
+            
+
+    /awsserver/elasticache:
+        get:
+          summary: 获取elasticache资源
+          description:  获取elasticache资源
+          tags: [aws_server_source]
+          operationId: awsserver_elasticache
+          responses: 
+            200:
+              description: 全部elasticache资源
+              schema:
+                $ref: '#/definitions/ElastiCache'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'    
+                
+    /awsserver/elasticache/{cachecluster_id}:
+        put:
+            summary: 更新某个elasticache资源
+            description: 更新某个elasticache资源
+            tags: [aws_server_source]
+            operationId: awsserver_elasticache_put
+            parameters:
+                - name: status
+                  in: query
+                  required: true
+                  type: string
+                - $ref: '#/parameters/ec_instance_id' 
+            responses:
+                201:
+                  description: 返回更新后的资源信息
+                  schema:
+                    $ref: '#/definitions/ElastiCache'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+        
+        delete:
+          summary: 删除某个elasticache资源
+          description: 删除某个elasticache资源
+          tags: [aws_server_source]
+          operationId: awsserver_elasticache_delete
+          parameters: 
+            - $ref: '#/parameters/ec_instance_id'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                    
+                
+    /awsserver/elb:
+        get:
+          summary: 获取elb资源
+          description: 获取elb资源
+          tags: [aws_server_source]
+          operationId: awsserver_elb
+          responses:
+            200:
+              description: 获取elb资源
+              schema:
+                $ref: '#/definitions/Elb'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'       
+    /awsserver/elb/{loadbalancer_name}:
+
+        delete:
+          summary: 删除某个elb资源
+          description: 删除某个elb资源
+          tags: [aws_server_source]
+          operationId: awsserver_elb_delete
+          parameters: 
+            - $ref: '#/parameters/elb_instance_name'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                      
+                
+    /awsserver/rds:
+        get:
+          summary: 获取rds资源
+          description: 获取rds资源
+          tags: [aws_server_source]
+          operationId: awsserver_rds
+          responses:
+            200:
+              description: 全部rds资源
+              schema:
+                $ref: '#/definitions/Rds'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'    
+    /awsserver/rds/{rds_instance_identifier}:                
+        put:
+            summary: 更新某个rds资源
+            description: 更新某个rds资源
+            tags: [aws_server_source]
+            operationId: awsserver_rds_put
+            parameters:
+                - name: status
+                  in: query
+                  required: true
+                  type: string
+                - $ref: '#/parameters/rds_instance_identifier' 
+            responses:
+                201:
+                  description: 返回更新后的资源信息
+                  schema:
+                    $ref: '#/definitions/Rds'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+        
+        delete:
+          summary: 删除某个rds资源
+          description: 删除某个rds资源
+          tags: [aws_server_source]
+          operationId: awsserver_rds_delete
+          parameters: 
+            - $ref: '#/parameters/rds_instance_identifier'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                   
+                
+    /awsserver/volume:
+        get:
+          summary: 获取volume资源
+          description: cmdb volume
+          tags: [aws_server_source]
+          operationId: awsserver_volume
+          responses:
+            200:
+              description: a list of volume
+              schema:
+                $ref: '#/definitions/Volume'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'   
+                
+    /awsserver/volume/{volume_id}:                
+        put:
+            summary: 更新某个volume资源
+            description: 更新某个volume资源
+            tags: [aws_server_source]
+            operationId: awsserver_volume_put
+            parameters:
+                - name: state
+                  in: query
+                  required: true
+                  type: string
+                - $ref: '#/parameters/volume_instance_id' 
+            responses:
+                201:
+                  description: 返回更新后的资源信息
+                  schema:
+                    $ref: '#/definitions/Volume'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+        
+        delete:
+          summary: 删除某个rds资源
+          description: 删除某个rds资源
+          tags: [aws_server_source]
+          operationId: awsserver_rds_delete
+          parameters: 
+            - $ref: '#/parameters/volume_instance_id'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                  
+                
+    /awsserver/s3:
+        get:
+          summary: 获取s3资源
+          description: 获取s3资源
+          tags: [aws_server_source]
+          operationId: awsserver_s3
+          responses:
+            200:
+              description: 获取s3资源
+              schema:
+                $ref: '#/definitions/S3'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error' 
+                
+    /awsserver/s3/{s3_name}:                
+        delete:
+          summary: 删除某个s3资源
+          description: 删除某个s3资源
+          tags: [aws_server_source]
+          operationId: awsserver_s3_delete
+          parameters: 
+            - $ref: '#/parameters/s3_name'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                 
+
+
+    /awsserver/iam:
+        get:
+            summary: 获取iam资源
+            description: 获取iam资源
+            tags: [aws_server_source]
+            operationId: awsserver_iam
+            responses:
+              200:
+                description: 获取iam资源
+                schema:
+                  $ref: '#/definitions/Iam'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+                  
+    /awsserver/iam/{user_id}:                  
+        delete:
+          summary: 删除某个iam资源
+          description: 删除某个iam资源
+          tags: [aws_server_source]
+          operationId: awsserver_iam_delete
+          parameters: 
+            - $ref: '#/parameters/Iam_user_id'
+          responses:
+            201:
+              description: 返回删除成功消息
+              schema:
+                $ref: '#/definitions/Success'
+            default:
+              description: Unexpected Error
+              schema:
+                $ref: '#/definitions/Error'                   
+
+    /cloudwatch/ec2/{instance_id}:
+        get:
+            summary: 获取ec2监控数据
+            tags: [aws_cloudwatch_source]
+            operationId: cloudwatch_ec2_instance_id
+            parameters:
+                - $ref: '#/parameters/ec2_instance_id'
+                - $ref: '#/parameters/ec2_monitor_item'  
+                - $ref: '#/parameters/start_time'
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/period'
+                - $ref: '#/parameters/polymerization'
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error' 
+                
+    /cloudwatch/elb/{loadbalancer_name}:
+        get:
+            summary: 获取elb监控数据
+            tags: [aws_cloudwatch_source]
+            operationId: cloudwatch_elb_loadbalancer_name
+            parameters:
+                - name: loadbalancer_name
+                  in: path
+                  required: true
+                  description: elb实例名字
+                  type: string
+                - $ref: '#/parameters/elb_monitor_item'
+                - $ref: '#/parameters/start_time'
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/period'
+                - $ref: '#/parameters/polymerization'
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error' 
+                    
+    /cloudwatch/rds/{instance_identifier}:
+        get:
+            summary: 获取rds监控数据
+            tags: [aws_cloudwatch_source]
+            operationId: cloudwatch_rds_instance_identifier
+            parameters:
+                - name: rds_instance_identifier
+                  in: path
+                  required: true
+                  description: rds的名字
+                  type: string
+                - $ref: '#/parameters/rds_monitor_item'
+                - $ref: '#/parameters/start_time'
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/period'
+                - $ref: '#/parameters/polymerization'
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error' 
+                    
+    /cloudwatch/elasticache/{cachecluster_id}:
+        get:
+            summary: 获取elasticache监控数据
+            tags: [aws_cloudwatch_source]
+            operationId: cloudwatch_elasticache_cachecluster_id
+            parameters:
+                - name: cachecluster_id
+                  in: path
+                  required: true
+                  description: elasticache的名字
+                  type: string
+                - $ref: '#/parameters/elasticache_monitor_item'
+                - $ref: '#/parameters/start_time'
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/period'
+                - $ref: '#/parameters/polymerization'
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error' 
+                    
+tags:
+    - {description: "aws服务资源", name: aws_server_source}
+    - {description: "aws监控资源", name: aws_cloudwatch_source}

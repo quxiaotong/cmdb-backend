@@ -1,0 +1,10 @@
+FROM docker.io/mappies/centos7-python3.5
+RUN cp /usr/share/zoneinfo/Asia/Shanghai /etc/localtime
+RUN mkdir -p /data/python/cmdb
+ENV PYTHONPATH $PYTHONPATH:/data/python/cmdb/guokr-cmdb
+ADD guokr-cmdb.tar.gz /data/python/cmdb
+WORKDIR /data/python/cmdb/guokr-cmdb
+RUN pip install --upgrade pip
+RUN pip3 install -r requirements.txt
+
+
