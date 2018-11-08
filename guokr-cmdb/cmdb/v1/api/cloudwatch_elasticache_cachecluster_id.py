@@ -28,7 +28,7 @@ class CloudwatchElasticacheCacheclusterId(Resource):
         if re.search("h", end_time, flags=re.I):
             dvalue = int(end_time.split("h")[0])
         elif re.search("d", end_time, flags=re.I):
-            dvalue = int(end_time.split("d")[0])*12
+            dvalue = int(end_time.split("d")[0])*24
         else:
             dvalue = int(end_time.split("w")[0])*168
 

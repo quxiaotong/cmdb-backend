@@ -65,4 +65,3 @@ def get_color_file_logger(name="loggingmodule.NomalLogger",
 
 logger = get_color_file_logger()
 # logger_celery=get_color_file_logger(file_name="/tmp/celery.log")
-

@@ -77,6 +77,10 @@ definitions:
                   type: boolean
                   minLength: 1
                   maxLength: 64
+                utilization:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                
                 
               
     Elb:
@@ -415,23 +419,44 @@ definitions:
         type: array
         items:
             properties:
-                resource_type:
+                listen_port:
                   type: string
                   minLength: 1
-                  maxLength: 64                  
-                name:
-                  type: string
-                  minLength: 1
-                  maxLength: 64                  
-                standard:
+                  maxLength: 64 
+                host_ip:
                   type: string
                   minLength: 1
                   maxLength: 64
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 6
                 aws_create_time:
                   type: string
                   minLength: 1
                   maxLength: 64
-                private_ip:
+                utilization:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                                  
+                cpu:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                memory:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+
+
+
+
+    
+    projname:
+        type: array
+        items:
+            properties:
+                name:
                   type: string
                   minLength: 1
                   maxLength: 64
@@ -511,7 +536,29 @@ definitions:
                 data_create_time:
                     type: string
                     minLength: 1
-                    maxLength: 64    
+                    maxLength: 64 
+    sysconfig:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                key:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                value:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                user_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
             
 
             
@@ -580,6 +627,30 @@ definitions:
                   type: string
                   minLength: 1
                   maxLength: 64
+
+    sysconfigmanage_data:
+        required:
+            - app_name
+            - key
+            - value
+            - user_name
+        properties:    
+            key:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            value:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            app_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            user_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64           
                 
                                
                 
@@ -817,6 +888,19 @@ parameters:
             
 
 paths:
+    /active:
+        get:
+            summary: 服务保活接口
+            description: 服务保活接口
+            tags: [app_to_resource]
+            operationId: cmdb_active
+            responses:
+              200:
+                description: 返回存活状态码
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
     /login:
         post:
             summary: 登陆cmdb平台
@@ -1506,7 +1590,7 @@ paths:
                 - web:
                   - user                    
                     
-    /apps/{app_id}:
+    /apps/{proj_name}/{app_id}:
         get:
             summary: 获取业务应用数据
             tags: [app_to_resource]
@@ -1529,8 +1613,33 @@ paths:
                     $ref: '#/definitions/Error'
             security:
                 - web:
-                  - user                    
-                    
+                  - user  
+                  
+    /apps/{proj_name}:
+        get:
+            summary: 获取业务线的微服务
+            tags: [app_to_resource]
+            operationId: app_projname_to_resource
+            parameters:
+                - name: proj_name
+                  in: path
+                  required: true
+                  description: 业务线的名字
+                  type: string
+
+            responses:
+                200:
+                  description: 返回的数据
+                  schema:
+                    $ref: '#/definitions/projname'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user
+                  
     /apps/{app_id}/status:
         get:
             summary: 获取业务对应资源的状态数据
@@ -1830,6 +1939,109 @@ paths:
                 description: Unexpected Error
                 schema:
                   $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin   
+                  
+    /sysconfigmanage:
+        get:
+            summary: 获取配置信息
+            description: 获取配置信息
+            tags: [config_manage]
+            operationId: sysmanage_source_get
+            parameters:
+                - name: app_name
+                  in: query
+                  required: true
+                  type: string
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+                  
+        put:
+            summary: 更新配置信息
+            description: 更新配置信息
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_put
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/sysconfigmanage_data'
+
+
+    
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        post:
+            summary: 新建配置信息
+            description: 新建配置信息
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_post
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/sysconfigmanage_data'                 
+              
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        
+        delete:
+            summary: 删除配置信息
+            description: 删除配置信息
+            consumes:
+                - application/x-www-form-urlencoded
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_delete
+            parameters: 
+                - name: sysaccountmanage_id
+                  description: 配置管理资源的id
+                  in: formData
+                  schema:
+                    required: 
+                      - sysconfig_id
+                    sysconfig_id:
+                        type: string
+
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
             security:
                 - web:
                   - admin                  

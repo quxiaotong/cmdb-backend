@@ -57,5 +57,6 @@ ERRORS = {
         'unauthorized': (401, u'token失效'),
         'secret_not_mate': (401, u'两次密码不一致'),
         'cmdb_user_exited': (402, u'账号已存在'),
-        'host is unreach': (404, u'主机不可达')
+        'host is unreach': (404, u'主机不可达'),
+        'app_name not find': (404, u'没有此应用')
 }

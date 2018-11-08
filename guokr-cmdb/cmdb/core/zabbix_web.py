@@ -3,6 +3,7 @@ from flask import current_app as app
 import re
 from datetime import datetime
 
+
 zapi = ZabbixAPI(url=app.config['ZABBIX_URL'], user=app.config['ZABBIX_USER'], password=app.config['ZABBIX_PASSWORD'])
 zab_server = zapi.do_request("host.get", {"search":{"name":"Zabbix server","host":"Zabbix server"}})
 zab_hostid = zab_server["result"][0]["hostid"]

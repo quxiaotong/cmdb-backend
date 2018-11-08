@@ -1,6 +1,7 @@
 # -*- coding: utf-8 -*-
 #!/usr/bin/python
 # -*- coding: utf-8 -*-
+#客户端收集信息，服务端执行ansible获取信息存入数据库
 import json
 import shutil
 from collections import namedtuple
@@ -21,6 +22,7 @@ import os
 import psutil
 import datetime
 import json
+
 def app_cpu_top():
     now_time = datetime.datetime.now()
     now = datetime.datetime.strftime(now_time,"%Y.%m.%d %H:%M:%S")

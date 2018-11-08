@@ -14,10 +14,25 @@ produces:
     - application/json
   
 definitions:
+    Token:
+        type: array
+        items:
+            properties:
+                access_token:
+                  type: string
+
     Ec2:
         type: array
         items:
             properties:
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                instance_type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
                 instance_id:
                   type: string
                   minLength: 1
@@ -62,6 +77,10 @@ definitions:
                   type: boolean
                   minLength: 1
                   maxLength: 64
+                utilization:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                
                 
               
     Elb:
@@ -132,7 +151,11 @@ definitions:
                 storage_type:
                   type: string
                   minLength: 1
-                  maxLength: 64                  
+                  maxLength: 64
+                instance_type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
                 cpu_num:
                   type: integer
                 memory_num:
@@ -177,7 +200,7 @@ definitions:
                   maxLength: 64                    
                 memory_num:
                   type: integer
-                data_create_time:
+                cachenode_type:
                   type: string
                   minLength: 1
                   maxLength: 64
@@ -219,10 +242,18 @@ definitions:
                   type: string
                   minLength: 1
                   maxLength: 64                     
+                ec2_instance_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
                 ec2_instance_id:
                   type: string
                   minLength: 1
-                  maxLength: 64      
+                  maxLength: 64 
+                device:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                   
                 data_create_time:
                   type: string
                   minLength: 1
@@ -252,7 +283,7 @@ definitions:
                   type: string   
                   minLength: 1
                   maxLength: 64     
-                data_create_time:
+                aws_create_time:
                   type: string
                   minLength: 1
                   maxLength: 64
@@ -283,7 +314,7 @@ definitions:
                   type: string
                   minLength: 1
                   maxLength: 64 
-                data_create_time:
+                aws_create_time:
                   type: string
                   minLength: 1
                   maxLength: 64
@@ -318,7 +349,7 @@ definitions:
                   type: string
                   minLength: 1
                   maxLength: 64       
-                data_create_time:
+                aws_create_time:
                   type: string
                   minLength: 1
                   maxLength: 64
@@ -329,16 +360,285 @@ definitions:
                 data_status:
                   type: boolean
                   minLength: 1
-                  maxLength: 64                  
+                  maxLength: 64     
+
+    disk:
+        type: array
+        items:
+            properties:
+                device: 
+                  type: string
+                  minLength: 1
+                  maxLength: 64 
+                all_size:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                avail_size:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+                mount_dir:
+                  type: string
+                  minLength: 1
+                  maxLength: 64       
+                used_size:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                used_percent:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                  
+        
+
+                  
           
     CloudWatch:
         type: array
         items:
             properties:
-                Timestamp:
+                CPUUtilization:
+                  type: float
+                NetworkIn:
+                  type: float
+                time:
                   type: string
-                data:
+                RequestCount:
+                  type: float
+                HTTPCode_Backend_5XX:
+                  type: float
+                FreeableMemory:
+                  type: float
+                SwapUsage:
+                  type: float
+                DatabaseConnections:
+                  type: float
+    apps:
+        type: array
+        items:
+            properties:
+                resource_type:
                   type: string
+                  minLength: 1
+                  maxLength: 64                  
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                  
+                standard:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                aws_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                private_ip:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                utilization:
+                  type: string
+                  minLength: 1
+                  maxLength: 64 
+                  
+    CloudWatch_test:
+        type: list
+    
+    opsaccount:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                platform:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                account:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                secret:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                mark:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                  
+    cmdbaccount:
+        required:
+            - account
+            - secret
+        properties:
+            account:
+                type: string
+                minLength: 1
+                maxLength: 64
+            secret:
+                type: string
+                minLength: 1
+                maxLength: 64
+            make_secret:
+                type: string
+                minLength: 1
+                maxLength: 64
+            authority:
+                description: 用户权限身份
+                type: string
+                enum:
+                    - admin
+                    - user
+                
+    cmdb_user_get:
+        type: array
+        items:
+            properties:
+                id:
+                    type: integer 
+                account:
+                    type: string
+                    minLength: 1
+                    maxLength: 64
+                authority:
+                    type: string
+                    minLength: 1
+                    maxLength: 64
+                data_create_time:
+                    type: string
+                    minLength: 1
+                    maxLength: 64 
+    sysconfig:
+        type: array
+        items:
+            properties:
+                id:
+                  type: integer
+                key:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                value:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                user_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64                    
+            
+
+            
+                
+    opsconfigmanage_data:
+        required:
+            - account
+            - secret
+        properties:    
+            platform:
+                type: string
+            account:
+                type: string
+            secret:
+                type: string
+            mark:
+                type: string
+                
+    wxaccount:
+        type: array
+        items:
+            required:
+            - use_type
+            - name
+            - type
+            - mail
+            - secret
+            - use_name
+            - phone
+            properties:
+                id:
+                  type: integer
+                use_type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                type:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                mail:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                secret:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                use_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                phone:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_create_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+                data_update_time:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+
+    sysconfigmanage_data:
+        required:
+            - app_name
+            - key
+            - value
+            - user_name
+        properties:    
+            key:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            value:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            app_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64
+            user_name:
+                  type: string
+                  minLength: 1
+                  maxLength: 64           
+                
+                               
+                
+
+                
     Error:
         properties:
             error_code:
@@ -351,8 +651,34 @@ definitions:
         properties:
             ok:
                 type: boolean
+                
+securityDefinitions:
+  web:
+    type: oauth2
+    authorizationUrl: http://swagger.io/api/oauth/dialog
+    flow: implicit
+    scopes:
+      admin: 管理员
+      user: 用户
+      guest: 游客
             
 parameters:
+    page_size:
+        name: 页数
+        in: query
+        required: false
+        description: 显示列表分页数
+        type: string
+        default: 20
+        
+    page_index:
+        name: 每页的行数
+        in: query
+        required: false
+        description: 显示每页行数
+        type: string
+        default: 1
+    
     ec2_instance_id:
         name: instance_id
         in: path
@@ -424,7 +750,7 @@ parameters:
         name: period
         in: query
         description: 每隔多长时间获得一次数据
-        type: integer
+        type: string
         required: true
     polymerization :
         name: polymerization
@@ -433,11 +759,26 @@ parameters:
         type: string
         required: true
         enum:
-            - SampleCount
             - Average
-            - Sum
             - Minimum
             - Maximum
+    sys_status:
+        name: sys_status
+        in: query
+        description: 监控项
+        type: string
+        required: true
+        enum:
+            - cpu
+            - memery
+    app_name:
+        name: app_name
+        in: query
+        description: 业务线名字
+        type: string
+        required: true   
+
+            
     ec2_monitor_item:
         name: ec2_monitor_item
         in: query
@@ -451,7 +792,8 @@ parameters:
             - DiskWriteBytes
             - DiskWriteOps
             - NetworkIn
-            - NetworkOut    
+            - NetworkOut 
+            
     elb_monitor_item:
         name: elb_monitor_item
         in: query
@@ -502,14 +844,159 @@ parameters:
             - FreeableMemory
             - Reclaimed
             - NetworkBytesIn
- 
+    time_point:
+        name: time_point
+        in: query
+        description: app运行状态的时间点
+        type: string
+        required: false
+    
+    host_ip:
+        name: host_ip
+        in: query
+        description: app运行的服务器ip
+        type: string
+        required: true
+    monitor_item:
+        name: monitor_item
+        in: query
+        description: app的监控项
+        type: string
+        required: true
+        enum:
+            - cpu
+            - memery
+            
+
+            
+
 paths:
+    /login:
+        post:
+            summary: 登陆cmdb平台
+            description: 登陆cmdb平台
+            tags: [config_manage]
+            operationId: cmdb_login_post
+            parameters:
+                - name: cmdbaccount
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/cmdbaccount'
+            responses:
+              200:
+                description: 返回用户token
+                schema:
+                  $ref: '#/definitions/Token'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+                  
+    /cmdbaccountmanage:
+        get:
+            summary: 获取cmdb平台账户
+            description: 获取cmdb平台账户
+            tags: [config_manage]
+            operationId: cmdbuser_get
+            responses:
+              200:
+                description: 返cmdb用户列表
+                schema:
+                  $ref: '#/definitions/cmdb_user_get'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+                  
+        post:
+            summary: 创建cmdb平台账户
+            description: 创建cmdb平台账户
+            tags: [config_manage]
+            operationId: cmdbuser_create_post
+            parameters:
+                - name: cmdbaccount
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/cmdbaccount'
+            responses:
+              200:
+                description: 返cmdb用户列表
+                schema:
+                  $ref: '#/definitions/cmdb_user_get'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+        put:
+            summary: 修改cmdb平台账户
+            description: 修改cmdb平台账户
+            tags: [config_manage]
+            operationId: cmdbuser_create_put
+            parameters:
+                - name: cmdbaccount
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/cmdbaccount'
+            responses:
+              200:
+                description: 返cmdb用户列表
+                schema:
+                  $ref: '#/definitions/cmdb_user_get'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+                  
+        delete:
+            summary: 删除cmdb平台账户
+            description: 删除平台账户
+            consumes:
+                - application/x-www-form-urlencoded
+            tags: [config_manage]
+            operationId: cmdbaccountmanage_source_delete
+            parameters: 
+                - name: opsaccountmanage_id
+                  description: 配置管理资源的id
+                  in: formData
+                  schema:
+                    required: 
+                      - account_id
+                    account_id:
+                        type: string
+            responses:
+              200:
+                description: 返cmdb用户列表
+                schema:
+                  $ref: '#/definitions/cmdb_user_get'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+                  
+                  
+            
+                  
     /awsserver/ec2:
         get:
           summary: 获取ec2的资源
           description: 获取ec2的资源
           tags: [aws_server_source]
           operationId: awsserver_ec2
+          parameters:
+                - $ref: '#/parameters/page_size'
+                - $ref: '#/parameters/page_index'
           responses:
             200:
               description: 全部ec2的资源列表
@@ -519,45 +1006,114 @@ paths:
               description: Unexpected Error
               schema:
                 $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - user
                 
-    /awsserver/ec2/{instance_id}:
-        put:
-            summary: 更新某个ec2资源
-            description: 更新某个ec2资源
+    /awsserver/ec2/{instance_ip}:
+        get:
+            summary: 获取某个ec2资源
+            description: 获取某个ec2资源
             tags: [aws_server_source]
-            operationId: awsserver_ec2_put
+            operationId: awsserver_ec2_get
             parameters:
-                - name: run_state
-                  in: query
+                - name: instance_ip
+                  in: path
                   required: true
                   type: string
-                - $ref: '#/parameters/ec2_instance_id' 
             responses:
-                201:
-                  description: 返回更新后的资源信息
+                200:
+                  description: 返回此实例ec2的具体信息
                   schema:
                     $ref: '#/definitions/Ec2'
                 default:
                   description: Unexpected Error
                   schema:
+                    $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - user
+    /awsserver/ec2/{instance_ip}/disk:
+        get:
+            summary: 获取某个ec2磁盘资源
+            description: 获取某个ec2磁盘资源
+            tags: [aws_server_source]
+            operationId: awsserver_ec2_disk_get
+            parameters:
+                - name: instance_ip
+                  in: path
+                  required: true
+                  type: string
+            responses:
+                200:
+                  description: 返回此实例ec2的磁盘信息
+                  schema:
+                    $ref: '#/definitions/disk'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - user
+                  
+    /awsserver/ec2/{instance_ip}/{monitor_item}:
+        get:
+            summary: 获取ec2的状态数据
+            tags: [aws_server_source]
+            operationId: ec2_status_get
+            parameters:
+                - name: instance_ip
+                  in: path
+                  required: true
+                  type: string
+                - name: monitor_item
+                  in: path
+                  required: true
+                  type: string
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/polymerization'
+                - $ref: '#/parameters/period'
+
+            responses:
+                200:
+                  description: 返回ec2的状态数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
                     $ref: '#/definitions/Error'
-        
-        delete:
-          summary: 删除某个ec2资源
-          description: 删除某个ec2资源
-          tags: [aws_server_source]
-          operationId: awsserver_ec2_delete
-          parameters: 
-            - $ref: '#/parameters/ec2_instance_id'
-          responses:
-            201:
-              description: 返回删除成功消息
-              schema:
-                $ref: '#/definitions/Success'
-            default:
-              description: Unexpected Error
-              schema:
-                $ref: '#/definitions/Error'  
+            security:
+                - web:
+                  - user
+    
+    /awsserver/ec2/{instance_ip}/point_status:
+        get:
+            summary: 获取ec2状态数据
+            tags: [aws_server_source]
+            operationId: ec2_point_status_get
+            parameters:
+                - name: instance_ip
+                  in: path
+                  required: true
+                  type: string
+                - $ref: '#/parameters/time_point'
+                - $ref: '#/parameters/monitor_item'
+
+            responses:
+                200:
+                  description: 返回ec2的状态数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user
+
                
 
     /awsserver/vpc:
@@ -575,7 +1131,10 @@ paths:
               description: Unexpected Error
               schema:
                 $ref: '#/definitions/Error'  
-         
+          security:
+              - web:
+                - user
+           
             
 
     /awsserver/elasticache:
@@ -592,8 +1151,11 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'    
-                
+                $ref: '#/definitions/Error'
+          security:
+              - web:
+                - user                
+                  
     /awsserver/elasticache/{cachecluster_id}:
         put:
             summary: 更新某个elasticache资源
@@ -615,6 +1177,9 @@ paths:
                   description: Unexpected Error
                   schema:
                     $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user
         
         delete:
           summary: 删除某个elasticache资源
@@ -631,8 +1196,11 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                    
-                
+                $ref: '#/definitions/Error'
+          security:
+            - web:
+              - admin                
+                 
     /awsserver/elb:
         get:
           summary: 获取elb资源
@@ -647,7 +1215,11 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'       
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - user
+                
     /awsserver/elb/{loadbalancer_name}:
 
         delete:
@@ -665,7 +1237,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                      
+                $ref: '#/definitions/Error'  
+          security:
+                - web:
+                  - admin                
                 
     /awsserver/rds:
         get:
@@ -681,7 +1256,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'    
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - user                
     /awsserver/rds/{rds_instance_identifier}:                
         put:
             summary: 更新某个rds资源
@@ -703,7 +1281,9 @@ paths:
                   description: Unexpected Error
                   schema:
                     $ref: '#/definitions/Error'
-        
+            security:
+                - web:
+                  - user
         delete:
           summary: 删除某个rds资源
           description: 删除某个rds资源
@@ -719,7 +1299,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                   
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - admin                
                 
     /awsserver/volume:
         get:
@@ -735,7 +1318,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'   
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - user                
                 
     /awsserver/volume/{volume_id}:                
         put:
@@ -758,6 +1344,9 @@ paths:
                   description: Unexpected Error
                   schema:
                     $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
         
         delete:
           summary: 删除某个rds资源
@@ -774,7 +1363,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                  
+                $ref: '#/definitions/Error'
+          security:
+                - web:
+                  - user                
                 
     /awsserver/s3:
         get:
@@ -791,6 +1383,9 @@ paths:
               description: Unexpected Error
               schema:
                 $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - user
                 
     /awsserver/s3/{s3_name}:                
         delete:
@@ -808,7 +1403,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                 
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - admin                
 
 
     /awsserver/iam:
@@ -826,6 +1424,9 @@ paths:
                 description: Unexpected Error
                 schema:
                   $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - user
                   
     /awsserver/iam/{user_id}:                  
         delete:
@@ -843,7 +1444,10 @@ paths:
             default:
               description: Unexpected Error
               schema:
-                $ref: '#/definitions/Error'                   
+                $ref: '#/definitions/Error' 
+          security:
+                - web:
+                  - admin                
 
     /cloudwatch/ec2/{instance_id}:
         get:
@@ -853,19 +1457,21 @@ paths:
             parameters:
                 - $ref: '#/parameters/ec2_instance_id'
                 - $ref: '#/parameters/ec2_monitor_item'  
-                - $ref: '#/parameters/start_time'
                 - $ref: '#/parameters/end_time'
-                - $ref: '#/parameters/period'
                 - $ref: '#/parameters/polymerization'
+                - $ref: '#/parameters/period'
             responses:
                 200:
                   description: cloudwatch返回的数据
                   schema:
-                    $ref: '#/definitions/CloudWatch'
+                    $ref: '#/definitions/CloudWatch_test'
                 default:
                   description: Unexpected Error
                   schema:
                     $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - user
                 
     /cloudwatch/elb/{loadbalancer_name}:
         get:
@@ -892,6 +1498,9 @@ paths:
                   description: Unexpected Error
                   schema:
                     $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - user
                     
     /cloudwatch/rds/{instance_identifier}:
         get:
@@ -899,25 +1508,28 @@ paths:
             tags: [aws_cloudwatch_source]
             operationId: cloudwatch_rds_instance_identifier
             parameters:
-                - name: rds_instance_identifier
+                - name: instance_identifier
                   in: path
                   required: true
                   description: rds的名字
                   type: string
                 - $ref: '#/parameters/rds_monitor_item'
-                - $ref: '#/parameters/start_time'
                 - $ref: '#/parameters/end_time'
-                - $ref: '#/parameters/period'
                 - $ref: '#/parameters/polymerization'
+                - $ref: '#/parameters/period'
+
             responses:
                 200:
                   description: cloudwatch返回的数据
                   schema:
-                    $ref: '#/definitions/CloudWatch'
+                    $ref: '#/definitions/CloudWatch_test'
                 default:
                   description: Unexpected Error
                   schema:
-                    $ref: '#/definitions/Error' 
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user                    
                     
     /cloudwatch/elasticache/{cachecluster_id}:
         get:
@@ -931,20 +1543,458 @@ paths:
                   description: elasticache的名字
                   type: string
                 - $ref: '#/parameters/elasticache_monitor_item'
-                - $ref: '#/parameters/start_time'
                 - $ref: '#/parameters/end_time'
-                - $ref: '#/parameters/period'
                 - $ref: '#/parameters/polymerization'
+                - $ref: '#/parameters/period'
+
             responses:
                 200:
                   description: cloudwatch返回的数据
                   schema:
-                    $ref: '#/definitions/CloudWatch'
+                    $ref: '#/definitions/CloudWatch_test'
                 default:
                   description: Unexpected Error
                   schema:
-                    $ref: '#/definitions/Error' 
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user                    
+                    
+    /apps/{app_id}:
+        get:
+            summary: 获取业务应用数据
+            tags: [app_to_resource]
+            operationId: app_to_resource
+            parameters:
+                - name: app_id
+                  in: path
+                  required: true
+                  description: app应用的名字
+                  type: string
+
+            responses:
+                200:
+                  description: apps返回的数据
+                  schema:
+                    $ref: '#/definitions/apps'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user                    
+                    
+    /apps/{app_id}/status:
+        get:
+            summary: 获取业务对应资源的状态数据
+            tags: [app_to_resource]
+            operationId: app_status_to_resource
+            parameters:
+                - name: app_id
+                  in: path
+                  required: true
+                  description: app应用的名字
+                  type: string
+                - $ref: '#/parameters/app_name'
+                - $ref: '#/parameters/sys_status'
+                - $ref: '#/parameters/end_time'
+                - $ref: '#/parameters/polymerization'
+                - $ref: '#/parameters/period'
+
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user
+    
+    /apps/apphost/point_status:
+        get:
+            summary: 获取业务对应资源的状态数据
+            tags: [app_to_resource]
+            operationId: app_status_to_resource
+            parameters:
+                - $ref: '#/parameters/time_point'
+                - $ref: '#/parameters/host_ip'
+                - $ref: '#/parameters/monitor_item'
+
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user
+                  
+                  
+    /apps/{app_name}/zabbix:
+        get:
+            summary: 获取zabbix的业务监控数据
+            tags: [app_to_resource]
+            operationId: app_zabbix_data_get
+            parameters:
+                - name: app_name
+                  in: path
+                  required: false
+                  description: app应用的名字
+                  type: string
+                - name: zab_app_webitem
+                  in: query
+                  required: false
+                  description: zabbix应用app的监控项
+                  type: string
+                - $ref: '#/parameters/time_point'
+
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user  
+                  
+    /apps/zabbix/status:                  
+        get:
+            summary: 获取所有业务的zabbix状态数据
+            tags: [app_to_resource]
+            operationId: apps_zabbix_status_get
+            responses:
+                200:
+                  description: cloudwatch返回的数据
+                  schema:
+                    $ref: '#/definitions/CloudWatch_test'
+                default:
+                  description: Unexpected Error
+                  schema:
+                    $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - user   
+
+                    
+    /opsaccountmanage:
+        get:
+            summary: 获取平台账户资源
+            description: 获取平台账户资源
+            tags: [config_manage]
+            operationId: accountmanage_source_get
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/opsaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+        put:
+            summary: 更新平台账户资源
+            description: 更新平台账户资源
+            tags: [config_manage]
+            operationId: accountmanage_source_put
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/opsconfigmanage_data'
+                - name: account_id
+                  in: formData
+                  required: true
+                  type: string
+
+    
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/opsaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        post:
+            summary: 新建平台账户资源
+            description: 新建平台账户资源
+            tags: [config_manage]
+            operationId: accountmanage_source_post
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/opsconfigmanage_data'                 
+              
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/opsaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        
+        delete:
+            summary: 删除平台账户资源
+            description: 删除平台账户资源
+            consumes:
+                - application/x-www-form-urlencoded
+            tags: [config_manage]
+            operationId: opsaccountmanage_source_delete
+            parameters: 
+                - name: opsaccountmanage_id
+                  description: 配置管理资源的id
+                  in: formData
+                  schema:
+                    required: 
+                      - account_id
+                    account_id:
+                        type: string
+
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/opsaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+
+    /wxaccountmanage:
+        get:
+            summary: 获取平台账户资源
+            description: 获取平台账户资源
+            tags: [config_manage]
+            operationId: wxaccountmanage_source_get
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/wxaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+        put:
+            summary: 更新平台账户资源
+            description: 更新平台账户资源
+            tags: [config_manage]
+            operationId: wxaccountmanage_source_put
+            parameters:
+                - name: wxconfig_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/wxaccount'
+                - name: account_id
+                  in: formData
+                  required: true
+                  type: string
+    
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/wxaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin                  
+        post:
+            summary: 新建平台账户资源
+            description: 新建平台账户资源
+            tags: [config_manage]
+            operationId: wxaccountmanage_source_post
+            parameters:
+                - name: wxconfig_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/wxaccount'                 
+              
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/wxaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin                  
+        
+        delete:
+            summary: 删除平台账户资源
+            description: 删除平台账户资源
+            consumes:
+                - application/x-www-form-urlencoded
+            tags: [config_manage]
+            operationId: wxaccountmanage_source_delete
+            parameters: 
+                - name: wxaccountmanage_id
+                  description: 配置管理资源的id
+                  in: formData
+                  schema:
+                    required: 
+                      - account_id
+                    account_id:
+                        type: string
+
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/wxaccount'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin   
+                  
+    /sysconfigmanage:
+        get:
+            summary: 获取配置信息
+            description: 获取配置信息
+            tags: [config_manage]
+            operationId: sysmanage_source_get
+            parameters:
+                - name: app_name
+                  in: query
+                  required: true
+                  type: string
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error'
+            security:
+                - web:
+                  - admin
+                  
+        put:
+            summary: 更新配置信息
+            description: 更新配置信息
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_put
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/sysconfigmanage_data'
+
+
+    
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        post:
+            summary: 新建配置信息
+            description: 新建配置信息
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_post
+            parameters:
+                - name: config_data
+                  in: formData
+                  schema:
+                    $ref: '#/definitions/sysconfigmanage_data'                 
+              
+            responses:
+              200:
+                description: 返回平台账户资源
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin
+        
+        delete:
+            summary: 删除配置信息
+            description: 删除配置信息
+            consumes:
+                - application/x-www-form-urlencoded
+            tags: [config_manage]
+            operationId: sysaccountmanage_source_delete
+            parameters: 
+                - name: sysaccountmanage_id
+                  description: 配置管理资源的id
+                  in: formData
+                  schema:
+                    required: 
+                      - sysconfig_id
+                    sysconfig_id:
+                        type: string
+
+            responses:
+              200:
+                description: 返回配置信息
+                schema:
+                  $ref: '#/definitions/sysconfig'
+              default:
+                description: Unexpected Error
+                schema:
+                  $ref: '#/definitions/Error' 
+            security:
+                - web:
+                  - admin                  
+            
+                        
                     
 tags:
     - {description: "aws服务资源", name: aws_server_source}
     - {description: "aws监控资源", name: aws_cloudwatch_source}
+    - {description: "业务对应资源", name: app_to_resource}
+    - {description: "配置管理资源", name:  config_manage}

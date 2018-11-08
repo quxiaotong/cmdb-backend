@@ -1,0 +1,18 @@
+version: '2'
+services:
+  cmdb:
+    image: 180.76.244.5/quxiaotong/cmdb:dev
+    container_name: cmdb
+    environment:
+      LISTEN: "0.0.0.0"
+      LISTEN_ON: 14500
+      PG_PERIOD: 86400
+      IF_PERIOD: 3700
+      APP_PERIOD: 120
+    network_mode: "host"
+    command: supervisord -n -c ./config/supervisord
+  redis:
+    container_name: cmdb-redis
+    image: 180.76.244.5/quxiaotong/redis:zizhi
+    ports:
+      - "6378:6379"

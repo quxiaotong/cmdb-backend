@@ -78,8 +78,7 @@ class Opsaccountmanage(Resource):
         for account_id in account_ids:
             account_id = int(account_id)
             try:
-                res = DBsession.query(aws_model.OpsAccountManage).filter_by(id=account_id).first()
-                setattr(res, "data_status", False)
+                DBsession.query(aws_model.OpsAccountManage).filter_by(id=account_id).delete()
                 DBsession.commit()
             except exc.SQLAlchemyError:
                 aws_model.DBsession.rollback()

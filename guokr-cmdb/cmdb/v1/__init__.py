@@ -11,6 +11,7 @@ from flask import current_app as app
 from .errors import abort
 from cmdb.core.db import DBsession
 from cmdb.models import aws_model
+
 @security.scopes_loader
 def current_scopes():
     # token = request.cookies.get("access_token")
@@ -20,7 +21,6 @@ def current_scopes():
     # else:
     #     try:
     #         user_token = jwt.decode(token, app.config["SECRET"])
-    #         print(user_token)
     #     except jwt.ExpiredSignatureError:
     #         #用户需要重新登陆获取新的token
     #         abort('unauthorized')

@@ -1,299 +1,877 @@
 {
-  "produces": [
-    "application/json"
-  ],
-  "parameters": {
-    "sys_status": {
-      "enum": [
-        "cpu",
-        "memery"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "sys_status",
-      "in": "query",
-      "description": "\u76d1\u63a7\u9879"
+  "tags": [
+    {
+      "description": "aws\u670d\u52a1\u8d44\u6e90",
+      "name": "aws_server_source"
     },
-    "rds_instance_identifier": {
-      "required": true,
-      "type": "string",
-      "name": "rds_instance_identifier",
-      "in": "path",
-      "description": "rds\u7684\u662f\u5b9e\u4f8b\u540d\u5b57"
+    {
+      "description": "aws\u76d1\u63a7\u8d44\u6e90",
+      "name": "aws_cloudwatch_source"
     },
-    "ec_instance_id": {
-      "required": true,
-      "type": "string",
-      "name": "cachecluster_id",
-      "in": "path",
-      "description": "elasticache\u7684\u540d\u5b57"
+    {
+      "description": "\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90",
+      "name": "app_to_resource"
     },
-    "Iam_user_id": {
-      "required": true,
-      "type": "string",
-      "name": "user_id",
-      "in": "path",
-      "description": "\u7528\u6237\u7684id"
-    },
-    "elasticache_monitor_item": {
-      "enum": [
-        "BytesUsedForCache",
-        "CacheHits",
-        "CacheMisses",
-        "CPUUtilization",
-        "CurrConnections",
-        "CurrItems",
-        "FreeableMemory",
-        "Reclaimed",
-        "NetworkBytesIn"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "elasticache_monitor_item",
-      "in": "query",
-      "description": "\u76d1\u63a7\u9879"
-    },
-    "app_name": {
-      "required": true,
-      "type": "string",
-      "name": "app_name",
-      "in": "query",
-      "description": "\u4e1a\u52a1\u7ebf\u540d\u5b57"
-    },
-    "page_size": {
-      "default": 20,
-      "type": "string",
-      "required": false,
-      "name": "\u9875\u6570",
-      "in": "query",
-      "description": "\u663e\u793a\u5217\u8868\u5206\u9875\u6570"
-    },
-    "period": {
-      "required": true,
-      "type": "string",
-      "name": "period",
-      "in": "query",
-      "description": "\u6bcf\u9694\u591a\u957f\u65f6\u95f4\u83b7\u5f97\u4e00\u6b21\u6570\u636e"
-    },
-    "page_index": {
-      "default": 1,
-      "type": "string",
-      "required": false,
-      "name": "\u6bcf\u9875\u7684\u884c\u6570",
-      "in": "query",
-      "description": "\u663e\u793a\u6bcf\u9875\u884c\u6570"
-    },
-    "ec2_monitor_item": {
-      "enum": [
-        "CPUUtilization",
-        "DiskReadBytes",
-        "DiskReadOps",
-        "DiskWriteBytes",
-        "DiskWriteOps",
-        "NetworkIn",
-        "NetworkOut"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "ec2_monitor_item",
-      "in": "query",
-      "description": "\u76d1\u63a7\u9879"
-    },
-    "monitor_item": {
-      "enum": [
-        "cpu",
-        "memery"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "monitor_item",
-      "in": "query",
-      "description": "app\u7684\u76d1\u63a7\u9879"
-    },
-    "polymerization": {
-      "enum": [
-        "Average",
-        "Minimum",
-        "Maximum"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "polymerization",
-      "in": "query",
-      "description": "\u6570\u636e\u7684\u805a\u5408\u51fd\u6570"
-    },
-    "vpc_instance_id": {
-      "required": true,
-      "type": "string",
-      "name": "vpc_id",
-      "in": "path",
-      "description": "vpc\u5b9e\u4f8b\u7684id"
-    },
-    "start_time": {
-      "required": true,
-      "type": "string",
-      "name": "start_time",
-      "in": "query",
-      "description": "\u83b7\u5f97\u76d1\u63a7\u6570\u636e\u7684\u8d77\u59cb\u65f6\u95f4"
-    },
-    "volume_instance_id": {
-      "required": true,
-      "type": "string",
-      "name": "volume_id",
-      "in": "path",
-      "description": "volume\u7684id"
-    },
-    "host_ip": {
-      "required": true,
-      "type": "string",
-      "name": "host_ip",
-      "in": "query",
-      "description": "app\u8fd0\u884c\u7684\u670d\u52a1\u5668ip"
-    },
-    "s3_name": {
-      "required": true,
-      "type": "string",
-      "name": "s3_name",
-      "in": "path",
-      "description": "s3\u5b9e\u4f8b\u540d\u5b57"
-    },
-    "elb_monitor_item": {
-      "enum": [
-        "UnHealthyHostCount",
-        "RequestCount",
-        "Latency",
-        "HealthyHostCount",
-        "BackendConnectionErrors",
-        "HTTPCode_Backend_5XX",
-        "HTTPCode_ELB_5XX",
-        "HTTPCode_Backend_4XX"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "elb_monitor_item",
-      "in": "query",
-      "description": "\u76d1\u63a7\u9879"
-    },
-    "end_time": {
-      "required": true,
-      "type": "string",
-      "name": "end_time",
-      "in": "query",
-      "description": "\u83b7\u5f97\u76d1\u63a7\u6570\u636e\u7684\u7ed3\u675f\u65f6\u95f4"
-    },
-    "ec2_instance_id": {
-      "required": true,
-      "type": "string",
-      "name": "instance_id",
-      "in": "path",
-      "description": "ec2\u7684\u5b9e\u4f8bid"
-    },
-    "elb_instance_name": {
-      "required": true,
-      "type": "string",
-      "name": "loadbalancer_name",
-      "in": "path",
-      "description": "elb\u7684\u540d\u5b57"
-    },
-    "rds_monitor_item": {
-      "enum": [
-        "FreeableMemory",
-        "FreeStorageSpace",
-        "ReadIOPS",
-        "ReadLatency",
-        "NetworkReceiveThroughput",
-        "NetworkTransmitThroughput",
-        "SwapUsage",
-        "WriteIOPS",
-        "WriteLatency",
-        "DatabaseConnections"
-      ],
-      "type": "string",
-      "required": true,
-      "name": "rds_monitor_item",
-      "in": "query",
-      "description": "\u76d1\u63a7\u9879"
-    },
-    "time_point": {
-      "required": false,
-      "type": "string",
-      "name": "time_point",
-      "in": "query",
-      "description": "app\u8fd0\u884c\u72b6\u6001\u7684\u65f6\u95f4\u70b9"
+    {
+      "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90",
+      "name": "config_manage"
     }
+  ],
+  "definitions": {
+    "wxaccount": {
+      "type": "array",
+      "items": {
+        "required": [
+          "use_type",
+          "name",
+          "type",
+          "mail",
+          "secret",
+          "use_name",
+          "phone"
+        ],
+        "properties": {
+          "type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "mail": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "use_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "use_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "phone": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "secret": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "disk": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "mount_dir": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "all_size": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "avail_size": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "used_size": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "device": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "used_percent": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "cmdbaccount": {
+      "required": [
+        "account",
+        "secret"
+      ],
+      "properties": {
+        "authority": {
+          "type": "string",
+          "description": "\u7528\u6237\u6743\u9650\u8eab\u4efd",
+          "enum": [
+            "admin",
+            "user"
+          ]
+        },
+        "secret": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "account": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "make_secret": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    },
+    "projname": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Elb": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "loadbalancer_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "vpc_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "dns_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 128
+          },
+          "loadbalancer_port": {
+            "type": "integer"
+          },
+          "instance_port": {
+            "type": "integer"
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Token": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "access_token": {
+            "type": "string"
+          }
+        }
+      }
+    },
+    "CloudWatch_test": {
+      "type": "list"
+    },
+    "apps": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "listen_port": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 6
+          },
+          "utilization": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "memory": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cpu": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "host_ip": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "sysconfig": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "key": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "value": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "user_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Iam": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "create_date": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "user_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "password_lastused": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "user_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "S3": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "aws_creation_date": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "size": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "opsconfigmanage_data": {
+      "required": [
+        "account",
+        "secret"
+      ],
+      "properties": {
+        "mark": {
+          "type": "string"
+        },
+        "platform": {
+          "type": "string"
+        },
+        "account": {
+          "type": "string"
+        },
+        "secret": {
+          "type": "string"
+        }
+      }
+    },
+    "cmdb_user_get": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "authority": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "account": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Ec2": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cpu_num": {
+            "type": "integer"
+          },
+          "keyname": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "utilization": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "memory_num": {
+            "type": "integer"
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "public_ip": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "private_ip": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "run_state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "vpc_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "instance_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "opsaccount": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "id": {
+            "type": "integer"
+          },
+          "mark": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "platform": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "secret": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "account": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "ElastiCache": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "memory_num": {
+            "type": "integer"
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cachenode_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cachecluster_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Volume": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "volume_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "ec2_instance_name": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "state": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "size": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "volume_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "ec2_instance_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "device": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "iops": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Error": {
+      "properties": {
+        "error_code": {
+          "type": "string"
+        },
+        "text": {
+          "type": "string"
+        },
+        "message": {
+          "type": "string"
+        }
+      }
+    },
+    "sysconfigmanage_data": {
+      "required": [
+        "app_name",
+        "key",
+        "value",
+        "user_name"
+      ],
+      "properties": {
+        "key": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "value": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "user_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        },
+        "app_name": {
+          "type": "string",
+          "minLength": 1,
+          "maxLength": 64
+        }
+      }
+    },
+    "Success": {
+      "properties": {
+        "ok": {
+          "type": "boolean"
+        }
+      }
+    },
+    "Rds": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cpu_num": {
+            "type": "integer"
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "memory_num": {
+            "type": "integer"
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "db_identifier": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "storage_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "id": {
+            "type": "integer"
+          },
+          "engine": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "resource_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "instance_type": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "Vpc": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "aws_create_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_status": {
+            "type": "boolean",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "status": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "data_update_time": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "vpc_id": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          },
+          "cidrblock": {
+            "type": "string",
+            "minLength": 1,
+            "maxLength": 64
+          }
+        }
+      }
+    },
+    "CloudWatch": {
+      "type": "array",
+      "items": {
+        "properties": {
+          "CPUUtilization": {
+            "type": "float"
+          },
+          "RequestCount": {
+            "type": "float"
+          },
+          "NetworkIn": {
+            "type": "float"
+          },
+          "HTTPCode_Backend_5XX": {
+            "type": "float"
+          },
+          "SwapUsage": {
+            "type": "float"
+          },
+          "FreeableMemory": {
+            "type": "float"
+          },
+          "DatabaseConnections": {
+            "type": "float"
+          },
+          "time": {
+            "type": "string"
+          }
+        }
+      }
+    }
+  },
+  "info": {
+    "title": "cmdb",
+    "description": "cmdb APIs",
+    "version": "1.0.0"
   },
   "consumes": [
     "application/json"
   ],
+  "swagger": "2.0",
   "securityDefinitions": {
     "web": {
-      "flow": "implicit",
       "type": "oauth2",
-      "authorizationUrl": "http://swagger.io/api/oauth/dialog",
       "scopes": {
+        "user": "\u7528\u6237",
         "admin": "\u7ba1\u7406\u5458",
-        "guest": "\u6e38\u5ba2",
-        "user": "\u7528\u6237"
-      }
+        "guest": "\u6e38\u5ba2"
+      },
+      "flow": "implicit",
+      "authorizationUrl": "http://swagger.io/api/oauth/dialog"
     }
   },
-  "swagger": "2.0",
   "paths": {
-    "/awsserver/ec2/{instance_ip}": {
+    "/cloudwatch/rds/{instance_identifier}": {
       "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u6b64\u5b9e\u4f8bec2\u7684\u5177\u4f53\u4fe1\u606f",
-            "schema": {
-              "$ref": "#/definitions/Ec2"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "instance_ip",
-            "in": "path"
-          }
-        ],
-        "operationId": "awsserver_ec2_get",
-        "summary": "\u83b7\u53d6\u67d0\u4e2aec2\u8d44\u6e90",
-        "description": "\u83b7\u53d6\u67d0\u4e2aec2\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/cloudwatch/elb/{loadbalancer_name}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "aws_cloudwatch_source"
         ],
@@ -301,135 +879,304 @@
           {
             "required": true,
             "type": "string",
-            "name": "loadbalancer_name",
             "in": "path",
-            "description": "elb\u5b9e\u4f8b\u540d\u5b57"
+            "description": "rds\u7684\u540d\u5b57",
+            "name": "instance_identifier"
           },
           {
-            "$ref": "#/parameters/elb_monitor_item"
-          },
-          {
-            "$ref": "#/parameters/start_time"
+            "$ref": "#/parameters/rds_monitor_item"
           },
           {
             "$ref": "#/parameters/end_time"
           },
           {
-            "$ref": "#/parameters/period"
+            "$ref": "#/parameters/polymerization"
           },
           {
-            "$ref": "#/parameters/polymerization"
+            "$ref": "#/parameters/period"
           }
         ],
-        "operationId": "cloudwatch_elb_loadbalancer_name",
-        "summary": "\u83b7\u53d6elb\u76d1\u63a7\u6570\u636e",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/login": {
-      "post": {
+        ],
         "responses": {
           "200": {
-            "description": "\u8fd4\u56de\u7528\u6237token",
             "schema": {
-              "$ref": "#/definitions/Token"
-            }
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u83b7\u53d6rds\u76d1\u63a7\u6570\u636e",
+        "operationId": "cloudwatch_rds_instance_identifier"
+      }
+    },
+    "/awsserver/ec2/{instance_ip}/point_status": {
+      "get": {
         "tags": [
-          "config_manage"
+          "aws_server_source"
         ],
         "parameters": [
           {
-            "name": "cmdbaccount",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/cmdbaccount"
-            }
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "name": "instance_ip"
+          },
+          {
+            "$ref": "#/parameters/time_point"
+          },
+          {
+            "$ref": "#/parameters/monitor_item"
           }
         ],
-        "operationId": "cmdb_login_post",
-        "summary": "\u767b\u9646cmdb\u5e73\u53f0",
-        "description": "\u767b\u9646cmdb\u5e73\u53f0"
-      }
-    },
-    "/apps/{app_name}/zabbix": {
-      "get": {
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
         "responses": {
           "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
             "schema": {
               "$ref": "#/definitions/CloudWatch_test"
-            }
+            },
+            "description": "\u8fd4\u56deec2\u7684\u72b6\u6001\u6570\u636e"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u83b7\u53d6ec2\u72b6\u6001\u6570\u636e",
+        "operationId": "ec2_point_status_get"
+      }
+    },
+    "/awsserver/elasticache": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6elasticache\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/ElastiCache"
+            },
+            "description": "\u5168\u90e8elasticache\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6elasticache\u8d44\u6e90",
+        "operationId": "awsserver_elasticache"
+      }
+    },
+    "/awsserver/rds/{rds_instance_identifier}": {
+      "delete": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/rds_instance_identifier"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
+        "operationId": "awsserver_rds_delete"
+      },
+      "put": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u66f4\u65b0\u67d0\u4e2ards\u8d44\u6e90",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "query",
+            "name": "status"
+          },
+          {
+            "$ref": "#/parameters/rds_instance_identifier"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Rds"
+            },
+            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u67d0\u4e2ards\u8d44\u6e90",
+        "operationId": "awsserver_rds_put"
+      }
+    },
+    "/awsserver/vpc": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6vpc\u7684\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Vpc"
+            },
+            "description": "\u5168\u90e8vpc\u7684\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6vpc\u7684\u8d44\u6e90",
+        "operationId": "awsserver_vpc"
+      }
+    },
+    "/apps/apphost/point_status": {
+      "get": {
         "tags": [
           "app_to_resource"
         ],
         "parameters": [
           {
-            "required": false,
-            "type": "string",
-            "name": "app_name",
-            "in": "path",
-            "description": "app\u5e94\u7528\u7684\u540d\u5b57"
-          },
-          {
-            "required": false,
-            "type": "string",
-            "name": "zab_app_webitem",
-            "in": "query",
-            "description": "zabbix\u5e94\u7528app\u7684\u76d1\u63a7\u9879"
-          },
-          {
             "$ref": "#/parameters/time_point"
+          },
+          {
+            "$ref": "#/parameters/host_ip"
+          },
+          {
+            "$ref": "#/parameters/monitor_item"
           }
         ],
-        "operationId": "app_zabbix_data_get",
-        "summary": "\u83b7\u53d6zabbix\u7684\u4e1a\u52a1\u76d1\u63a7\u6570\u636e",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/apps/{app_id}/status": {
-      "get": {
+        ],
         "responses": {
           "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
             "schema": {
               "$ref": "#/definitions/CloudWatch_test"
-            }
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90\u7684\u72b6\u6001\u6570\u636e",
+        "operationId": "app_status_to_resource"
+      }
+    },
+    "/awsserver/s3": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6s3\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/S3"
+            },
+            "description": "\u83b7\u53d6s3\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6s3\u8d44\u6e90",
+        "operationId": "awsserver_s3"
+      }
+    },
+    "/apps/{proj_name}": {
+      "get": {
         "tags": [
           "app_to_resource"
         ],
@@ -437,9 +1184,309 @@
           {
             "required": true,
             "type": "string",
-            "name": "app_id",
             "in": "path",
-            "description": "app\u5e94\u7528\u7684\u540d\u5b57"
+            "description": "\u4e1a\u52a1\u7ebf\u7684\u540d\u5b57",
+            "name": "proj_name"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/projname"
+            },
+            "description": "\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u4e1a\u52a1\u7ebf\u7684\u5fae\u670d\u52a1",
+        "operationId": "app_projname_to_resource"
+      }
+    },
+    "/cmdbaccountmanage": {
+      "post": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u521b\u5efacmdb\u5e73\u53f0\u8d26\u6237",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/cmdbaccount"
+            },
+            "in": "formData",
+            "name": "cmdbaccount"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/cmdb_user_get"
+            },
+            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u521b\u5efacmdb\u5e73\u53f0\u8d26\u6237",
+        "operationId": "cmdbuser_create_post"
+      },
+      "get": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u83b7\u53d6cmdb\u5e73\u53f0\u8d26\u6237",
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/cmdb_user_get"
+            },
+            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6cmdb\u5e73\u53f0\u8d26\u6237",
+        "operationId": "cmdbuser_get"
+      },
+      "delete": {
+        "tags": [
+          "config_manage"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237",
+        "parameters": [
+          {
+            "schema": {
+              "required": [
+                "account_id"
+              ],
+              "account_id": {
+                "type": "string"
+              }
+            },
+            "in": "formData",
+            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
+            "name": "opsaccountmanage_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/cmdb_user_get"
+            },
+            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664cmdb\u5e73\u53f0\u8d26\u6237",
+        "operationId": "cmdbaccountmanage_source_delete"
+      },
+      "put": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u4fee\u6539cmdb\u5e73\u53f0\u8d26\u6237",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/cmdbaccount"
+            },
+            "in": "formData",
+            "name": "cmdbaccount"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/cmdb_user_get"
+            },
+            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u4fee\u6539cmdb\u5e73\u53f0\u8d26\u6237",
+        "operationId": "cmdbuser_create_put"
+      }
+    },
+    "/awsserver/iam": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6iam\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Iam"
+            },
+            "description": "\u83b7\u53d6iam\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6iam\u8d44\u6e90",
+        "operationId": "awsserver_iam"
+      }
+    },
+    "/awsserver/elasticache/{cachecluster_id}": {
+      "delete": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u5220\u9664\u67d0\u4e2aelasticache\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/ec_instance_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2aelasticache\u8d44\u6e90",
+        "operationId": "awsserver_elasticache_delete"
+      },
+      "put": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u66f4\u65b0\u67d0\u4e2aelasticache\u8d44\u6e90",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "query",
+            "name": "status"
+          },
+          {
+            "$ref": "#/parameters/ec_instance_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/ElastiCache"
+            },
+            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u67d0\u4e2aelasticache\u8d44\u6e90",
+        "operationId": "awsserver_elasticache_put"
+      }
+    },
+    "/apps/{app_id}/status": {
+      "get": {
+        "tags": [
+          "app_to_resource"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "description": "app\u5e94\u7528\u7684\u540d\u5b57",
+            "name": "app_id"
           },
           {
             "$ref": "#/parameters/app_name"
@@ -457,151 +1504,74 @@
             "$ref": "#/parameters/period"
           }
         ],
-        "operationId": "app_status_to_resource",
-        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90\u7684\u72b6\u6001\u6570\u636e",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/awsserver/elasticache": {
-      "get": {
+        ],
         "responses": {
           "200": {
-            "description": "\u5168\u90e8elasticache\u8d44\u6e90",
             "schema": {
-              "$ref": "#/definitions/ElastiCache"
-            }
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_elasticache",
-        "summary": "\u83b7\u53d6elasticache\u8d44\u6e90",
-        "description": "\u83b7\u53d6elasticache\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
+        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90\u7684\u72b6\u6001\u6570\u636e",
+        "operationId": "app_status_to_resource"
       }
     },
     "/opsaccountmanage": {
       "post": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/opsaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "config_manage"
         ],
-        "parameters": [
-          {
-            "name": "config_data",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/opsconfigmanage_data"
-            }
-          }
-        ],
-        "operationId": "accountmanage_source_post",
-        "summary": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "description": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/opsaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
         "parameters": [
           {
-            "name": "config_data",
-            "in": "formData",
             "schema": {
               "$ref": "#/definitions/opsconfigmanage_data"
-            }
-          },
-          {
-            "required": true,
-            "type": "string",
-            "name": "account_id",
-            "in": "formData"
+            },
+            "in": "formData",
+            "name": "config_data"
           }
         ],
-        "operationId": "accountmanage_source_put",
-        "summary": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "security": [
           {
             "web": [
               "admin"
             ]
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/opsaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "accountmanage_source_post"
       },
       "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/opsaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "config_manage"
         ],
-        "operationId": "accountmanage_source_get",
-        "summary": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "description": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "security": [
           {
@@ -609,22 +1579,32 @@
               "admin"
             ]
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/opsaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "accountmanage_source_get"
       },
       "delete": {
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
+        "tags": [
+          "config_manage"
         ],
         "consumes": [
           "application/x-www-form-urlencoded"
         ],
-        "tags": [
-          "config_manage"
-        ],
+        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "parameters": [
           {
             "schema": {
@@ -635,49 +1615,493 @@
                 "type": "string"
               }
             },
-            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
             "in": "formData",
+            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
             "name": "opsaccountmanage_id"
           }
         ],
-        "operationId": "opsaccountmanage_source_delete",
-        "summary": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
         "responses": {
           "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
             "schema": {
               "$ref": "#/definitions/opsaccount"
-            }
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
-        }
+        },
+        "summary": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "opsaccountmanage_source_delete"
+      },
+      "put": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/opsconfigmanage_data"
+            },
+            "in": "formData",
+            "name": "config_data"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "in": "formData",
+            "name": "account_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/opsaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "accountmanage_source_put"
+      }
+    },
+    "/awsserver/elb": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6elb\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Elb"
+            },
+            "description": "\u83b7\u53d6elb\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6elb\u8d44\u6e90",
+        "operationId": "awsserver_elb"
+      }
+    },
+    "/awsserver/volume/{volume_id}": {
+      "delete": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/volume_instance_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
+        "operationId": "awsserver_rds_delete"
+      },
+      "put": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u66f4\u65b0\u67d0\u4e2avolume\u8d44\u6e90",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "query",
+            "name": "state"
+          },
+          {
+            "$ref": "#/parameters/volume_instance_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            },
+            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u67d0\u4e2avolume\u8d44\u6e90",
+        "operationId": "awsserver_volume_put"
+      }
+    },
+    "/cloudwatch/elb/{loadbalancer_name}": {
+      "get": {
+        "tags": [
+          "aws_cloudwatch_source"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "description": "elb\u5b9e\u4f8b\u540d\u5b57",
+            "name": "loadbalancer_name"
+          },
+          {
+            "$ref": "#/parameters/elb_monitor_item"
+          },
+          {
+            "$ref": "#/parameters/start_time"
+          },
+          {
+            "$ref": "#/parameters/end_time"
+          },
+          {
+            "$ref": "#/parameters/period"
+          },
+          {
+            "$ref": "#/parameters/polymerization"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CloudWatch"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6elb\u76d1\u63a7\u6570\u636e",
+        "operationId": "cloudwatch_elb_loadbalancer_name"
+      }
+    },
+    "/awsserver/ec2/{instance_ip}/{monitor_item}": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "name": "instance_ip"
+          },
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "name": "monitor_item"
+          },
+          {
+            "$ref": "#/parameters/end_time"
+          },
+          {
+            "$ref": "#/parameters/polymerization"
+          },
+          {
+            "$ref": "#/parameters/period"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "\u8fd4\u56deec2\u7684\u72b6\u6001\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6ec2\u7684\u72b6\u6001\u6570\u636e",
+        "operationId": "ec2_status_get"
+      }
+    },
+    "/awsserver/volume": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "cmdb volume",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Volume"
+            },
+            "description": "a list of volume"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6volume\u8d44\u6e90",
+        "operationId": "awsserver_volume"
+      }
+    },
+    "/sysconfigmanage": {
+      "post": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u65b0\u5efa\u914d\u7f6e\u4fe1\u606f",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/sysconfigmanage_data"
+            },
+            "in": "formData",
+            "name": "config_data"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/sysconfig"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u65b0\u5efa\u914d\u7f6e\u4fe1\u606f",
+        "operationId": "sysaccountmanage_source_post"
+      },
+      "get": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u83b7\u53d6\u914d\u7f6e\u4fe1\u606f",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "query",
+            "name": "app_name"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/sysconfig"
+            },
+            "description": "\u8fd4\u56de\u914d\u7f6e\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u914d\u7f6e\u4fe1\u606f",
+        "operationId": "sysmanage_source_get"
+      },
+      "delete": {
+        "tags": [
+          "config_manage"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "description": "\u5220\u9664\u914d\u7f6e\u4fe1\u606f",
+        "parameters": [
+          {
+            "schema": {
+              "required": [
+                "sysconfig_id"
+              ],
+              "sysconfig_id": {
+                "type": "string"
+              }
+            },
+            "in": "formData",
+            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
+            "name": "sysaccountmanage_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/sysconfig"
+            },
+            "description": "\u8fd4\u56de\u914d\u7f6e\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u914d\u7f6e\u4fe1\u606f",
+        "operationId": "sysaccountmanage_source_delete"
+      },
+      "put": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u66f4\u65b0\u914d\u7f6e\u4fe1\u606f",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/sysconfigmanage_data"
+            },
+            "in": "formData",
+            "name": "config_data"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/sysconfig"
+            },
+            "description": "\u8fd4\u56de\u914d\u7f6e\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u914d\u7f6e\u4fe1\u606f",
+        "operationId": "sysaccountmanage_source_put"
       }
     },
     "/awsserver/ec2": {
       "get": {
-        "responses": {
-          "200": {
-            "description": "\u5168\u90e8ec2\u7684\u8d44\u6e90\u5217\u8868",
-            "schema": {
-              "$ref": "#/definitions/Ec2"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "aws_server_source"
         ],
+        "description": "\u83b7\u53d6ec2\u7684\u8d44\u6e90",
         "parameters": [
           {
             "$ref": "#/parameters/page_size"
@@ -686,141 +2110,314 @@
             "$ref": "#/parameters/page_index"
           }
         ],
-        "operationId": "awsserver_ec2",
-        "summary": "\u83b7\u53d6ec2\u7684\u8d44\u6e90",
-        "description": "\u83b7\u53d6ec2\u7684\u8d44\u6e90",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/awsserver/elb": {
-      "get": {
+        ],
         "responses": {
           "200": {
-            "description": "\u83b7\u53d6elb\u8d44\u6e90",
             "schema": {
-              "$ref": "#/definitions/Elb"
-            }
+              "$ref": "#/definitions/Ec2"
+            },
+            "description": "\u5168\u90e8ec2\u7684\u8d44\u6e90\u5217\u8868"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_elb",
-        "summary": "\u83b7\u53d6elb\u8d44\u6e90",
-        "description": "\u83b7\u53d6elb\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
+        "summary": "\u83b7\u53d6ec2\u7684\u8d44\u6e90",
+        "operationId": "awsserver_ec2"
       }
     },
-    "/awsserver/elasticache/{cachecluster_id}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
+    "/wxaccountmanage": {
+      "post": {
         "tags": [
-          "aws_server_source"
+          "config_manage"
         ],
+        "description": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "parameters": [
           {
-            "$ref": "#/parameters/ec_instance_id"
+            "schema": {
+              "$ref": "#/definitions/wxaccount"
+            },
+            "in": "formData",
+            "name": "wxconfig_data"
           }
         ],
-        "operationId": "awsserver_elasticache_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2aelasticache\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2aelasticache\u8d44\u6e90",
         "security": [
           {
             "web": [
               "admin"
             ]
           }
-        ]
-      },
-      "put": {
+        ],
         "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f",
+          "200": {
             "schema": {
-              "$ref": "#/definitions/ElastiCache"
-            }
+              "$ref": "#/definitions/wxaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "wxaccountmanage_source_post"
+      },
+      "get": {
         "tags": [
-          "aws_server_source"
+          "config_manage"
         ],
+        "description": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/wxaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "wxaccountmanage_source_get"
+      },
+      "delete": {
+        "tags": [
+          "config_manage"
+        ],
+        "consumes": [
+          "application/x-www-form-urlencoded"
+        ],
+        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
         "parameters": [
+          {
+            "schema": {
+              "required": [
+                "account_id"
+              ],
+              "account_id": {
+                "type": "string"
+              }
+            },
+            "in": "formData",
+            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
+            "name": "wxaccountmanage_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/wxaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "wxaccountmanage_source_delete"
+      },
+      "put": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/wxaccount"
+            },
+            "in": "formData",
+            "name": "wxconfig_data"
+          },
           {
             "required": true,
             "type": "string",
-            "name": "status",
-            "in": "query"
-          },
-          {
-            "$ref": "#/parameters/ec_instance_id"
+            "in": "formData",
+            "name": "account_id"
           }
         ],
-        "operationId": "awsserver_elasticache_put",
-        "summary": "\u66f4\u65b0\u67d0\u4e2aelasticache\u8d44\u6e90",
-        "description": "\u66f4\u65b0\u67d0\u4e2aelasticache\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/wxaccount"
+            },
+            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
+        "operationId": "wxaccountmanage_source_put"
+      }
+    },
+    "/apps/{app_name}/zabbix": {
+      "get": {
+        "tags": [
+          "app_to_resource"
+        ],
+        "parameters": [
+          {
+            "required": false,
+            "type": "string",
+            "in": "path",
+            "description": "app\u5e94\u7528\u7684\u540d\u5b57",
+            "name": "app_name"
+          },
+          {
+            "required": false,
+            "type": "string",
+            "in": "query",
+            "description": "zabbix\u5e94\u7528app\u7684\u76d1\u63a7\u9879",
+            "name": "zab_app_webitem"
+          },
+          {
+            "$ref": "#/parameters/time_point"
+          }
+        ],
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6zabbix\u7684\u4e1a\u52a1\u76d1\u63a7\u6570\u636e",
+        "operationId": "app_zabbix_data_get"
+      }
+    },
+    "/awsserver/s3/{s3_name}": {
+      "delete": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u5220\u9664\u67d0\u4e2as3\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/s3_name"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2as3\u8d44\u6e90",
+        "operationId": "awsserver_s3_delete"
+      }
+    },
+    "/awsserver/iam/{user_id}": {
+      "delete": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u5220\u9664\u67d0\u4e2aiam\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/Iam_user_id"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2aiam\u8d44\u6e90",
+        "operationId": "awsserver_iam_delete"
       }
     },
     "/cloudwatch/elasticache/{cachecluster_id}": {
       "get": {
-        "responses": {
-          "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "aws_cloudwatch_source"
         ],
@@ -828,9 +2425,9 @@
           {
             "required": true,
             "type": "string",
-            "name": "cachecluster_id",
             "in": "path",
-            "description": "elasticache\u7684\u540d\u5b57"
+            "description": "elasticache\u7684\u540d\u5b57",
+            "name": "cachecluster_id"
           },
           {
             "$ref": "#/parameters/elasticache_monitor_item"
@@ -845,115 +2442,301 @@
             "$ref": "#/parameters/period"
           }
         ],
-        "operationId": "cloudwatch_elasticache_cachecluster_id",
-        "summary": "\u83b7\u53d6elasticache\u76d1\u63a7\u6570\u636e",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/awsserver/s3": {
-      "get": {
+        ],
         "responses": {
           "200": {
-            "description": "\u83b7\u53d6s3\u8d44\u6e90",
             "schema": {
-              "$ref": "#/definitions/S3"
-            }
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u83b7\u53d6elasticache\u76d1\u63a7\u6570\u636e",
+        "operationId": "cloudwatch_elasticache_cachecluster_id"
+      }
+    },
+    "/active": {
+      "get": {
+        "tags": [
+          "app_to_resource"
+        ],
+        "responses": {
+          "200": {
+            "description": "\u8fd4\u56de\u5b58\u6d3b\u72b6\u6001\u7801"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "description": "\u670d\u52a1\u4fdd\u6d3b\u63a5\u53e3",
+        "summary": "\u670d\u52a1\u4fdd\u6d3b\u63a5\u53e3",
+        "operationId": "cmdb_active"
+      }
+    },
+    "/awsserver/elb/{loadbalancer_name}": {
+      "delete": {
         "tags": [
           "aws_server_source"
         ],
-        "operationId": "awsserver_s3",
-        "summary": "\u83b7\u53d6s3\u8d44\u6e90",
-        "description": "\u83b7\u53d6s3\u8d44\u6e90",
+        "description": "\u5220\u9664\u67d0\u4e2aelb\u8d44\u6e90",
+        "parameters": [
+          {
+            "$ref": "#/parameters/elb_instance_name"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "admin"
+            ]
+          }
+        ],
+        "responses": {
+          "201": {
+            "schema": {
+              "$ref": "#/definitions/Success"
+            },
+            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u5220\u9664\u67d0\u4e2aelb\u8d44\u6e90",
+        "operationId": "awsserver_elb_delete"
+      }
+    },
+    "/awsserver/ec2/{instance_ip}": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6\u67d0\u4e2aec2\u8d44\u6e90",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "name": "instance_ip"
+          }
+        ],
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
-      }
-    },
-    "/cloudwatch/rds/{instance_identifier}": {
-      "get": {
+        ],
         "responses": {
           "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
             "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
+              "$ref": "#/definitions/Ec2"
+            },
+            "description": "\u8fd4\u56de\u6b64\u5b9e\u4f8bec2\u7684\u5177\u4f53\u4fe1\u606f"
           },
           "default": {
-            "description": "Unexpected Error",
             "schema": {
               "$ref": "#/definitions/Error"
-            }
+            },
+            "description": "Unexpected Error"
           }
         },
+        "summary": "\u83b7\u53d6\u67d0\u4e2aec2\u8d44\u6e90",
+        "operationId": "awsserver_ec2_get"
+      }
+    },
+    "/awsserver/rds": {
+      "get": {
         "tags": [
-          "aws_cloudwatch_source"
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6rds\u8d44\u6e90",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Rds"
+            },
+            "description": "\u5168\u90e8rds\u8d44\u6e90"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6rds\u8d44\u6e90",
+        "operationId": "awsserver_rds"
+      }
+    },
+    "/apps/zabbix/status": {
+      "get": {
+        "tags": [
+          "app_to_resource"
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u6240\u6709\u4e1a\u52a1\u7684zabbix\u72b6\u6001\u6570\u636e",
+        "operationId": "apps_zabbix_status_get"
+      }
+    },
+    "/awsserver/ec2/{instance_ip}/disk": {
+      "get": {
+        "tags": [
+          "aws_server_source"
+        ],
+        "description": "\u83b7\u53d6\u67d0\u4e2aec2\u78c1\u76d8\u8d44\u6e90",
+        "parameters": [
+          {
+            "required": true,
+            "type": "string",
+            "in": "path",
+            "name": "instance_ip"
+          }
+        ],
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/disk"
+            },
+            "description": "\u8fd4\u56de\u6b64\u5b9e\u4f8bec2\u7684\u78c1\u76d8\u4fe1\u606f"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u67d0\u4e2aec2\u78c1\u76d8\u8d44\u6e90",
+        "operationId": "awsserver_ec2_disk_get"
+      }
+    },
+    "/apps/{proj_name}/{app_id}": {
+      "get": {
+        "tags": [
+          "app_to_resource"
         ],
         "parameters": [
           {
             "required": true,
             "type": "string",
-            "name": "instance_identifier",
             "in": "path",
-            "description": "rds\u7684\u540d\u5b57"
-          },
-          {
-            "$ref": "#/parameters/rds_monitor_item"
-          },
-          {
-            "$ref": "#/parameters/end_time"
-          },
-          {
-            "$ref": "#/parameters/polymerization"
-          },
-          {
-            "$ref": "#/parameters/period"
+            "description": "app\u5e94\u7528\u7684\u540d\u5b57",
+            "name": "app_id"
           }
         ],
-        "operationId": "cloudwatch_rds_instance_identifier",
-        "summary": "\u83b7\u53d6rds\u76d1\u63a7\u6570\u636e",
         "security": [
           {
             "web": [
               "user"
             ]
           }
-        ]
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/apps"
+            },
+            "description": "apps\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5e94\u7528\u6570\u636e",
+        "operationId": "app_to_resource"
+      }
+    },
+    "/login": {
+      "post": {
+        "tags": [
+          "config_manage"
+        ],
+        "description": "\u767b\u9646cmdb\u5e73\u53f0",
+        "parameters": [
+          {
+            "schema": {
+              "$ref": "#/definitions/cmdbaccount"
+            },
+            "in": "formData",
+            "name": "cmdbaccount"
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/Token"
+            },
+            "description": "\u8fd4\u56de\u7528\u6237token"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
+        "summary": "\u767b\u9646cmdb\u5e73\u53f0",
+        "operationId": "cmdb_login_post"
       }
     },
     "/cloudwatch/ec2/{instance_id}": {
       "get": {
-        "responses": {
-          "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
         "tags": [
           "aws_cloudwatch_source"
         ],
@@ -974,1728 +2757,254 @@
             "$ref": "#/parameters/period"
           }
         ],
-        "operationId": "cloudwatch_ec2_instance_id",
+        "security": [
+          {
+            "web": [
+              "user"
+            ]
+          }
+        ],
+        "responses": {
+          "200": {
+            "schema": {
+              "$ref": "#/definitions/CloudWatch_test"
+            },
+            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e"
+          },
+          "default": {
+            "schema": {
+              "$ref": "#/definitions/Error"
+            },
+            "description": "Unexpected Error"
+          }
+        },
         "summary": "\u83b7\u53d6ec2\u76d1\u63a7\u6570\u636e",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/ec2/{instance_ip}/disk": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u6b64\u5b9e\u4f8bec2\u7684\u78c1\u76d8\u4fe1\u606f",
-            "schema": {
-              "$ref": "#/definitions/disk"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "instance_ip",
-            "in": "path"
-          }
-        ],
-        "operationId": "awsserver_ec2_disk_get",
-        "summary": "\u83b7\u53d6\u67d0\u4e2aec2\u78c1\u76d8\u8d44\u6e90",
-        "description": "\u83b7\u53d6\u67d0\u4e2aec2\u78c1\u76d8\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/wxaccountmanage": {
-      "post": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "name": "wxconfig_data",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          }
-        ],
-        "operationId": "wxaccountmanage_source_post",
-        "summary": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u65b0\u5efa\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "put": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "name": "wxconfig_data",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          },
-          {
-            "required": true,
-            "type": "string",
-            "name": "account_id",
-            "in": "formData"
-          }
-        ],
-        "operationId": "wxaccountmanage_source_put",
-        "summary": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u66f4\u65b0\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "operationId": "wxaccountmanage_source_get",
-        "summary": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u83b7\u53d6\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "schema": {
-              "required": [
-                "account_id"
-              ],
-              "account_id": {
-                "type": "string"
-              }
-            },
-            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
-            "in": "formData",
-            "name": "wxaccountmanage_id"
-          }
-        ],
-        "operationId": "wxaccountmanage_source_delete",
-        "summary": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56de\u5e73\u53f0\u8d26\u6237\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/wxaccount"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/apps/{app_id}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "apps\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/apps"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "app_to_resource"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "app_id",
-            "in": "path",
-            "description": "app\u5e94\u7528\u7684\u540d\u5b57"
-          }
-        ],
-        "operationId": "app_to_resource",
-        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5e94\u7528\u6570\u636e",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/cmdbaccountmanage": {
-      "put": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868",
-            "schema": {
-              "$ref": "#/definitions/cmdb_user_get"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "name": "cmdbaccount",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/cmdbaccount"
-            }
-          }
-        ],
-        "operationId": "cmdbuser_create_put",
-        "summary": "\u4fee\u6539cmdb\u5e73\u53f0\u8d26\u6237",
-        "description": "\u4fee\u6539cmdb\u5e73\u53f0\u8d26\u6237",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "post": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868",
-            "schema": {
-              "$ref": "#/definitions/cmdb_user_get"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "name": "cmdbaccount",
-            "in": "formData",
-            "schema": {
-              "$ref": "#/definitions/cmdbaccount"
-            }
-          }
-        ],
-        "operationId": "cmdbuser_create_post",
-        "summary": "\u521b\u5efacmdb\u5e73\u53f0\u8d26\u6237",
-        "description": "\u521b\u5efacmdb\u5e73\u53f0\u8d26\u6237",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868",
-            "schema": {
-              "$ref": "#/definitions/cmdb_user_get"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "config_manage"
-        ],
-        "operationId": "cmdbuser_get",
-        "summary": "\u83b7\u53d6cmdb\u5e73\u53f0\u8d26\u6237",
-        "description": "\u83b7\u53d6cmdb\u5e73\u53f0\u8d26\u6237",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "delete": {
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ],
-        "consumes": [
-          "application/x-www-form-urlencoded"
-        ],
-        "tags": [
-          "config_manage"
-        ],
-        "parameters": [
-          {
-            "schema": {
-              "required": [
-                "account_id"
-              ],
-              "account_id": {
-                "type": "string"
-              }
-            },
-            "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90\u7684id",
-            "in": "formData",
-            "name": "opsaccountmanage_id"
-          }
-        ],
-        "operationId": "cmdbaccountmanage_source_delete",
-        "summary": "\u5220\u9664cmdb\u5e73\u53f0\u8d26\u6237",
-        "description": "\u5220\u9664\u5e73\u53f0\u8d26\u6237",
-        "responses": {
-          "200": {
-            "description": "\u8fd4cmdb\u7528\u6237\u5217\u8868",
-            "schema": {
-              "$ref": "#/definitions/cmdb_user_get"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        }
-      }
-    },
-    "/awsserver/ec2/{instance_ip}/{monitor_item}": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56deec2\u7684\u72b6\u6001\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "instance_ip",
-            "in": "path"
-          },
-          {
-            "required": true,
-            "type": "string",
-            "name": "monitor_item",
-            "in": "path"
-          },
-          {
-            "$ref": "#/parameters/end_time"
-          },
-          {
-            "$ref": "#/parameters/polymerization"
-          },
-          {
-            "$ref": "#/parameters/period"
-          }
-        ],
-        "operationId": "ec2_status_get",
-        "summary": "\u83b7\u53d6ec2\u7684\u72b6\u6001\u6570\u636e",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/ec2/{instance_ip}/point_status": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u8fd4\u56deec2\u7684\u72b6\u6001\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "instance_ip",
-            "in": "path"
-          },
-          {
-            "$ref": "#/parameters/time_point"
-          },
-          {
-            "$ref": "#/parameters/monitor_item"
-          }
-        ],
-        "operationId": "ec2_point_status_get",
-        "summary": "\u83b7\u53d6ec2\u72b6\u6001\u6570\u636e",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/elb/{loadbalancer_name}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/elb_instance_name"
-          }
-        ],
-        "operationId": "awsserver_elb_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2aelb\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2aelb\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/iam": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u83b7\u53d6iam\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/Iam"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_iam",
-        "summary": "\u83b7\u53d6iam\u8d44\u6e90",
-        "description": "\u83b7\u53d6iam\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/apps/apphost/point_status": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "app_to_resource"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/time_point"
-          },
-          {
-            "$ref": "#/parameters/host_ip"
-          },
-          {
-            "$ref": "#/parameters/monitor_item"
-          }
-        ],
-        "operationId": "app_status_to_resource",
-        "summary": "\u83b7\u53d6\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90\u7684\u72b6\u6001\u6570\u636e",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/rds": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u5168\u90e8rds\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/Rds"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_rds",
-        "summary": "\u83b7\u53d6rds\u8d44\u6e90",
-        "description": "\u83b7\u53d6rds\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/volume": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "a list of volume",
-            "schema": {
-              "$ref": "#/definitions/Volume"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_volume",
-        "summary": "\u83b7\u53d6volume\u8d44\u6e90",
-        "description": "cmdb volume",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/volume/{volume_id}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/volume_instance_id"
-          }
-        ],
-        "operationId": "awsserver_rds_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      },
-      "put": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f",
-            "schema": {
-              "$ref": "#/definitions/Volume"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "state",
-            "in": "query"
-          },
-          {
-            "$ref": "#/parameters/volume_instance_id"
-          }
-        ],
-        "operationId": "awsserver_volume_put",
-        "summary": "\u66f4\u65b0\u67d0\u4e2avolume\u8d44\u6e90",
-        "description": "\u66f4\u65b0\u67d0\u4e2avolume\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/vpc": {
-      "get": {
-        "responses": {
-          "200": {
-            "description": "\u5168\u90e8vpc\u7684\u8d44\u6e90",
-            "schema": {
-              "$ref": "#/definitions/Vpc"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "operationId": "awsserver_vpc",
-        "summary": "\u83b7\u53d6vpc\u7684\u8d44\u6e90",
-        "description": "\u83b7\u53d6vpc\u7684\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/rds/{rds_instance_identifier}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/rds_instance_identifier"
-          }
-        ],
-        "operationId": "awsserver_rds_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2ards\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      },
-      "put": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u66f4\u65b0\u540e\u7684\u8d44\u6e90\u4fe1\u606f",
-            "schema": {
-              "$ref": "#/definitions/Rds"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "required": true,
-            "type": "string",
-            "name": "status",
-            "in": "query"
-          },
-          {
-            "$ref": "#/parameters/rds_instance_identifier"
-          }
-        ],
-        "operationId": "awsserver_rds_put",
-        "summary": "\u66f4\u65b0\u67d0\u4e2ards\u8d44\u6e90",
-        "description": "\u66f4\u65b0\u67d0\u4e2ards\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ]
-      }
-    },
-    "/awsserver/iam/{user_id}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/Iam_user_id"
-          }
-        ],
-        "operationId": "awsserver_iam_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2aiam\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2aiam\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
-      }
-    },
-    "/apps/zabbix/status": {
-      "get": {
-        "operationId": "apps_zabbix_status_get",
-        "summary": "\u83b7\u53d6\u6240\u6709\u4e1a\u52a1\u7684zabbix\u72b6\u6001\u6570\u636e",
-        "responses": {
-          "200": {
-            "description": "cloudwatch\u8fd4\u56de\u7684\u6570\u636e",
-            "schema": {
-              "$ref": "#/definitions/CloudWatch_test"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "security": [
-          {
-            "web": [
-              "user"
-            ]
-          }
-        ],
-        "tags": [
-          "app_to_resource"
-        ]
-      }
-    },
-    "/awsserver/s3/{s3_name}": {
-      "delete": {
-        "responses": {
-          "201": {
-            "description": "\u8fd4\u56de\u5220\u9664\u6210\u529f\u6d88\u606f",
-            "schema": {
-              "$ref": "#/definitions/Success"
-            }
-          },
-          "default": {
-            "description": "Unexpected Error",
-            "schema": {
-              "$ref": "#/definitions/Error"
-            }
-          }
-        },
-        "tags": [
-          "aws_server_source"
-        ],
-        "parameters": [
-          {
-            "$ref": "#/parameters/s3_name"
-          }
-        ],
-        "operationId": "awsserver_s3_delete",
-        "summary": "\u5220\u9664\u67d0\u4e2as3\u8d44\u6e90",
-        "description": "\u5220\u9664\u67d0\u4e2as3\u8d44\u6e90",
-        "security": [
-          {
-            "web": [
-              "admin"
-            ]
-          }
-        ]
+        "operationId": "cloudwatch_ec2_instance_id"
       }
     }
-  },
-  "info": {
-    "description": "cmdb APIs",
-    "version": "1.0.0",
-    "title": "cmdb"
   },
   "basePath": "/v1",
-  "definitions": {
-    "apps": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "resource_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "private_ip": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "standard": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+  "produces": [
+    "application/json"
+  ],
+  "parameters": {
+    "monitor_item": {
+      "type": "string",
+      "in": "query",
+      "description": "app\u7684\u76d1\u63a7\u9879",
+      "name": "monitor_item",
+      "required": true,
+      "enum": [
+        "cpu",
+        "memery"
+      ]
     },
-    "cmdbaccount": {
-      "required": [
-        "account",
-        "secret"
-      ],
-      "properties": {
-        "make_secret": {
-          "maxLength": 64,
-          "type": "string",
-          "minLength": 1
-        },
-        "authority": {
-          "enum": [
-            "admin",
-            "user"
-          ],
-          "type": "string",
-          "description": "\u7528\u6237\u6743\u9650\u8eab\u4efd"
-        },
-        "secret": {
-          "maxLength": 64,
-          "type": "string",
-          "minLength": 1
-        },
-        "account": {
-          "maxLength": 64,
-          "type": "string",
-          "minLength": 1
-        }
-      }
+    "app_name": {
+      "type": "string",
+      "required": true,
+      "in": "query",
+      "description": "\u4e1a\u52a1\u7ebf\u540d\u5b57",
+      "name": "app_name"
     },
-    "CloudWatch": {
-      "items": {
-        "properties": {
-          "SwapUsage": {
-            "type": "float"
-          },
-          "RequestCount": {
-            "type": "float"
-          },
-          "DatabaseConnections": {
-            "type": "float"
-          },
-          "CPUUtilization": {
-            "type": "float"
-          },
-          "NetworkIn": {
-            "type": "float"
-          },
-          "time": {
-            "type": "string"
-          },
-          "FreeableMemory": {
-            "type": "float"
-          },
-          "HTTPCode_Backend_5XX": {
-            "type": "float"
-          }
-        }
-      },
-      "type": "array"
+    "volume_instance_id": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "volume\u7684id",
+      "name": "volume_id"
     },
-    "ElastiCache": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "cachenode_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "cachecluster_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "engine": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "memory_num": {
-            "type": "integer"
-          },
-          "status": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "elb_monitor_item": {
+      "type": "string",
+      "in": "query",
+      "description": "\u76d1\u63a7\u9879",
+      "name": "elb_monitor_item",
+      "required": true,
+      "enum": [
+        "UnHealthyHostCount",
+        "RequestCount",
+        "Latency",
+        "HealthyHostCount",
+        "BackendConnectionErrors",
+        "HTTPCode_Backend_5XX",
+        "HTTPCode_ELB_5XX",
+        "HTTPCode_Backend_4XX"
+      ]
     },
-    "Ec2": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "keyname": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "memory_num": {
-            "type": "integer"
-          },
-          "instance_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "public_ip": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "private_ip": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "run_state": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "cpu_num": {
-            "type": "integer"
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          },
-          "vpc_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "instance_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "polymerization": {
+      "type": "string",
+      "in": "query",
+      "description": "\u6570\u636e\u7684\u805a\u5408\u51fd\u6570",
+      "name": "polymerization",
+      "required": true,
+      "enum": [
+        "Average",
+        "Minimum",
+        "Maximum"
+      ]
     },
-    "Vpc": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "vpc_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "cidrblock": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "status": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "sys_status": {
+      "type": "string",
+      "in": "query",
+      "description": "\u76d1\u63a7\u9879",
+      "name": "sys_status",
+      "required": true,
+      "enum": [
+        "cpu",
+        "memery"
+      ]
     },
-    "CloudWatch_test": {
-      "type": "list"
+    "ec_instance_id": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "elasticache\u7684\u540d\u5b57",
+      "name": "cachecluster_id"
     },
-    "opsaccount": {
-      "items": {
-        "properties": {
-          "id": {
-            "type": "integer"
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "platform": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "secret": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "account": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "mark": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "rds_monitor_item": {
+      "type": "string",
+      "in": "query",
+      "description": "\u76d1\u63a7\u9879",
+      "name": "rds_monitor_item",
+      "required": true,
+      "enum": [
+        "FreeableMemory",
+        "FreeStorageSpace",
+        "ReadIOPS",
+        "ReadLatency",
+        "NetworkReceiveThroughput",
+        "NetworkTransmitThroughput",
+        "SwapUsage",
+        "WriteIOPS",
+        "WriteLatency",
+        "DatabaseConnections"
+      ]
     },
-    "Rds": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "engine": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "memory_num": {
-            "type": "integer"
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "db_identifier": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "storage_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "cpu_num": {
-            "type": "integer"
-          },
-          "status": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          },
-          "resource_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "instance_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "vpc_instance_id": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "vpc\u5b9e\u4f8b\u7684id",
+      "name": "vpc_id"
     },
-    "Token": {
-      "items": {
-        "properties": {
-          "access_token": {
-            "type": "string"
-          }
-        }
-      },
-      "type": "array"
+    "time_point": {
+      "type": "string",
+      "required": false,
+      "in": "query",
+      "description": "app\u8fd0\u884c\u72b6\u6001\u7684\u65f6\u95f4\u70b9",
+      "name": "time_point"
     },
-    "Elb": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "instance_port": {
-            "type": "integer"
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "dns_name": {
-            "maxLength": 128,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          },
-          "vpc_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "loadbalancer_port": {
-            "type": "integer"
-          },
-          "loadbalancer_name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "ec2_monitor_item": {
+      "type": "string",
+      "in": "query",
+      "description": "\u76d1\u63a7\u9879",
+      "name": "ec2_monitor_item",
+      "required": true,
+      "enum": [
+        "CPUUtilization",
+        "DiskReadBytes",
+        "DiskReadOps",
+        "DiskWriteBytes",
+        "DiskWriteOps",
+        "NetworkIn",
+        "NetworkOut"
+      ]
     },
-    "Iam": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "password_lastused": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "create_date": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "user_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "user_name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "elb_instance_name": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "elb\u7684\u540d\u5b57",
+      "name": "loadbalancer_name"
     },
-    "Success": {
-      "properties": {
-        "ok": {
-          "type": "boolean"
-        }
-      }
+    "start_time": {
+      "type": "string",
+      "required": true,
+      "in": "query",
+      "description": "\u83b7\u5f97\u76d1\u63a7\u6570\u636e\u7684\u8d77\u59cb\u65f6\u95f4",
+      "name": "start_time"
     },
-    "disk": {
-      "items": {
-        "properties": {
-          "used_size": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "device": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "all_size": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "mount_dir": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "used_percent": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "avail_size": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "s3_name": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "s3\u5b9e\u4f8b\u540d\u5b57",
+      "name": "s3_name"
     },
-    "S3": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          },
-          "aws_creation_date": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "size": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "rds_instance_identifier": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "rds\u7684\u662f\u5b9e\u4f8b\u540d\u5b57",
+      "name": "rds_instance_identifier"
     },
-    "cmdb_user_get": {
-      "items": {
-        "properties": {
-          "authority": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "account": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "period": {
+      "type": "string",
+      "required": true,
+      "in": "query",
+      "description": "\u6bcf\u9694\u591a\u957f\u65f6\u95f4\u83b7\u5f97\u4e00\u6b21\u6570\u636e",
+      "name": "period"
     },
-    "Error": {
-      "properties": {
-        "message": {
-          "type": "string"
-        },
-        "text": {
-          "type": "string"
-        },
-        "error_code": {
-          "type": "string"
-        }
-      }
+    "host_ip": {
+      "type": "string",
+      "required": true,
+      "in": "query",
+      "description": "app\u8fd0\u884c\u7684\u670d\u52a1\u5668ip",
+      "name": "host_ip"
     },
-    "wxaccount": {
-      "items": {
-        "required": [
-          "use_type",
-          "name",
-          "type",
-          "mail",
-          "secret",
-          "use_name",
-          "phone"
-        ],
-        "properties": {
-          "phone": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "id": {
-            "type": "integer"
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "use_name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "mail": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "use_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "secret": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "page_index": {
+      "type": "string",
+      "default": 1,
+      "in": "query",
+      "description": "\u663e\u793a\u6bcf\u9875\u884c\u6570",
+      "name": "\u6bcf\u9875\u7684\u884c\u6570",
+      "required": false
     },
-    "opsconfigmanage_data": {
-      "required": [
-        "account",
-        "secret"
-      ],
-      "properties": {
-        "mark": {
-          "type": "string"
-        },
-        "secret": {
-          "type": "string"
-        },
-        "account": {
-          "type": "string"
-        },
-        "platform": {
-          "type": "string"
-        }
-      }
+    "end_time": {
+      "type": "string",
+      "required": true,
+      "in": "query",
+      "description": "\u83b7\u5f97\u76d1\u63a7\u6570\u636e\u7684\u7ed3\u675f\u65f6\u95f4",
+      "name": "end_time"
     },
-    "Volume": {
-      "items": {
-        "properties": {
-          "aws_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_create_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "state": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "ec2_instance_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "volume_type": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_update_time": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "device": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "data_status": {
-            "maxLength": 64,
-            "type": "boolean",
-            "minLength": 1
-          },
-          "volume_id": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "iops": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "size": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          },
-          "ec2_instance_name": {
-            "maxLength": 64,
-            "type": "string",
-            "minLength": 1
-          }
-        }
-      },
-      "type": "array"
+    "Iam_user_id": {
+      "type": "string",
+      "required": true,
+      "in": "path",
+      "description": "\u7528\u6237\u7684id",
+      "name": "user_id"
+    },
+    "ec2_instance_id": {
+      "required": true,
+      "type": "string",
+      "in": "path",
+      "description": "ec2\u7684\u5b9e\u4f8bid",
+      "name": "instance_id"
+    },
+    "elasticache_monitor_item": {
+      "type": "string",
+      "in": "query",
+      "description": "\u76d1\u63a7\u9879",
+      "name": "elasticache_monitor_item",
+      "required": true,
+      "enum": [
+        "BytesUsedForCache",
+        "CacheHits",
+        "CacheMisses",
+        "CPUUtilization",
+        "CurrConnections",
+        "CurrItems",
+        "FreeableMemory",
+        "Reclaimed",
+        "NetworkBytesIn"
+      ]
+    },
+    "page_size": {
+      "type": "string",
+      "default": 20,
+      "in": "query",
+      "description": "\u663e\u793a\u5217\u8868\u5206\u9875\u6570",
+      "name": "\u9875\u6570",
+      "required": false
     }
-  },
-  "tags": [
-    {
-      "description": "aws\u670d\u52a1\u8d44\u6e90",
-      "name": "aws_server_source"
-    },
-    {
-      "description": "aws\u76d1\u63a7\u8d44\u6e90",
-      "name": "aws_cloudwatch_source"
-    },
-    {
-      "description": "\u4e1a\u52a1\u5bf9\u5e94\u8d44\u6e90",
-      "name": "app_to_resource"
-    },
-    {
-      "description": "\u914d\u7f6e\u7ba1\u7406\u8d44\u6e90",
-      "name": "config_manage"
-    }
-  ]
+  }
 }

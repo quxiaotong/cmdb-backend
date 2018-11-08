@@ -4,6 +4,7 @@ from sqlalchemy import Column, String, ForeignKey, DateTime
 from sqlalchemy.orm import relationship
 from sqlalchemy import func, Table, UniqueConstraint
 from cmdb.core.db import engine, Base, session, DBsession
+from cmdb.v1.errors import abort
 
 class Ec2(Base):
     __tablename__ = "ec2"
@@ -18,6 +19,7 @@ class Ec2(Base):
     run_state = Column(String(64), nullable=True)
     keyname = Column(String(64), nullable=True)
     name = Column(String(64), nullable=True)
+    utilization = Column(String(64), nullable=True)
     data_status = Column(Boolean(), nullable=False,
                          index=True,default=True)
     aws_create_time = Column(DateTime(timezone=True),
@@ -319,9 +321,20 @@ class Iam(Base):
 class App(Base):
     __tablename__ = 'app'
     id = Column(Integer(), nullable=False,
-                primary_key=True,autoincrement=True)
+                primary_key=True, autoincrement=True)
     name = Column(String(64), nullable=False, unique=True)
     desc = Column(Text(), nullable=True, index=False)
+    project = Column(String(64), nullable=True, unique=False)
+
+    def get_sysconfig(self, app_name):
+        try:
+            res_app = DBsession.query(App).filter(App.name == app_name).first()
+            res_sysconfig = res_app.sysconfig
+            for res in res_sysconfig:
+                res.data_update_time = res.data_update_time.strftime("%Y-%m-%d %H:%M:%S")
+            return res_sysconfig
+        except Exception as e:
+            abort("app_name not find")
 
 
 class App2Aws(Base):
@@ -331,7 +344,10 @@ class App2Aws(Base):
     app_id = Column(Integer, ForeignKey('app.id'), nullable=True, index=True)
     resource_id = Column(Integer, nullable=True, index=True)
     resource_type = Column(Enum("elb", "ec2", "redis", "rds", "s3", name="resource_type"), nullable=False)
-    __table_args__ = (UniqueConstraint('app_id', 'resource_type', 'resource_id', name='app_resource'),)
+    listen_port = Column(String(64),nullable=True,unique=False)
+    project = Column(String(64),nullable=True,unique=False)
+    host_ip = Column(String(64),nullable=True,unique=False)
+    __table_args__ = (UniqueConstraint('app_id', 'resource_type', 'resource_id','listen_port', name='app_resource'),)
 
 
 
@@ -412,6 +428,23 @@ class CmdbUser(Base):
             res.data_create_time = res.data_create_time.strftime("%Y-%m-%d %H:%M:%S")
         return res_acc
 
+
+class sysconfig(Base):
+    __tablename__ = 'sysconfig_manage'
+    id = Column(Integer(), nullable=False,
+                primary_key=True,autoincrement=True)
+    key = Column(Text(), nullable=False, unique=True, index=True)
+    value = Column(Text(), nullable=False,)
+    user_name = Column(String(64), nullable=False,)
+    data_update_time = Column(DateTime(timezone=True),
+                           nullable=False, index=True,
+                           server_default=func.current_timestamp())
+
+    app_id = Column(Integer, ForeignKey("app.id"))
+    app = relationship("App", backref="sysconfig")
+
+
+
 class LogCrontab(Base):
     __tablename__ = 'log'
     id = Column(Integer(), nullable=False,
@@ -427,4 +460,5 @@ def init_db():
 
 def drop_db():
     Base.metadata.drop_all(engine)
-init_db()
+
+#init_db()

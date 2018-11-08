@@ -36,7 +36,6 @@ class Login(Resource):
             self.payload["uid"] = user.id
             self.payload["authority"] = user.authority
             token = bytes.decode(jwt.encode(self.payload, app.config['SECRET'], algorithm='HS256'))
-            print(token)
             res_token["access_token"] = token
             res_data.append(res_token)
             return res_data, 201, None

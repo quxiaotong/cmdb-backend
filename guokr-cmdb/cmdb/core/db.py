@@ -6,7 +6,7 @@ from flask import current_app as app
 import redis
 from influxdb import InfluxDBClient
 
-# engine = create_engine(app.config['SQLALCHEMY_DATABASE_URI'], echo=True, pool_size=20, max_overflow=0, encoding='utf-8')
+
 engine = create_engine('postgresql://postgres:cmdb@54.223.98.251:5432/cmdb', echo=True, pool_size=20, max_overflow=0, encoding='utf-8')
 Base = declarative_base()
 session = sessionmaker(bind=engine)

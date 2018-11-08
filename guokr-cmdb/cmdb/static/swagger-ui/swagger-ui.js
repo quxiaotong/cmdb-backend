@@ -21424,9 +21424,9 @@ var nextTick =(function () {
             setTimeout(flush, 0);
         };
     }
-    // runs a task after all other tasks have been run
+    // runs a task after all other tasks have been supervisord
     // this is useful for unhandled rejection tracking that needs to happen
-    // after all `then`d tasks have been run.
+    // after all `then`d tasks have been supervisord.
     nextTick.runAfter = function (task) {
         laterQueue.push(task);
         if (!flushing) {
@@ -22500,7 +22500,7 @@ function async(makeGenerator) {
  * The spawn function is a small wrapper around async that immediately
  * calls the generator and also ends the promise chain, so that any
  * unhandled errors are thrown instead of forwarded to the error
- * handler. This is useful because it's extremely common to run
+ * handler. This is useful because it's extremely common to supervisord
  * generators at the top-level to work with libraries.
  */
 Q.spawn = spawn;

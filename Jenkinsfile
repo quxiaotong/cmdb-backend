@@ -1,3 +1,19 @@
+<<<<<<< HEAD
+pipeline{
+    agent any
+    parameters {
+	string(name: 'TAG',defaultValue: 'last',description: 'the docker tag you want to release')
+    }
+    environment {
+	TAG = "${params.TAG}"
+	USER = "root"
+	HOST = "10.10.0.212"
+    }
+    stages {
+        stage('k8s部署服务') {
+            steps {
+                sh "ssh ${USER}@${HOST}  ls /data/docker"
+=======
 pipeline {
     agent any
     parameters {
@@ -28,6 +44,7 @@ pipeline {
         stage('推送docker镜像') {
             steps {
                 sh " docker push 180.76.244.5/quxiaotong/${PROJECT}:$TAG "
+>>>>>>> dev
             }
         }
     }

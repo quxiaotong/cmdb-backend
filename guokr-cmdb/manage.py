@@ -14,10 +14,7 @@ migrate = Migrate(app, Base)
 
 manager = Manager(app)
 manager.add_command(
-    'server', Server(
-        host=app.config['LISTEN'],
-        port=app.config['LISTEN_ON'],
-        use_reloader=True))
+    'server', Server(host=app.config['LISTEN'], port=app.config['LISTEN_ON'], use_reloader=True))
 manager.add_command('db', MigrateCommand)
 
 

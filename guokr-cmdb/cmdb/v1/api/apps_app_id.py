@@ -28,6 +28,7 @@ class AppsAppId(Resource):
                 res_resource["private_ip"] = res.private_ip
                 res_resource["standard"] = str(res.ec2_type.cpu) + "U" + "," + str(res.ec2_type.memory) + "G"
                 res_resource["aws_create_time"] = res.aws_create_time.strftime("%Y-%m-%d %H:%M:%S")
+                res_resource["utilization"] = res.utilization
                 res_app.append(res_resource)
 
             elif re.search("redis", item[0], flags=re.I):
